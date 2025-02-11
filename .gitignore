@@ -3,5 +3,4 @@ vendor
 uploads
 app/config
 public/css/style.css
-
-public/.htaccess
+.htaccess
