@@ -15,7 +15,7 @@ class Database
                 $dsn = "pgsql:host={$host};port={$port};dbname={$dbname}";
                 $pdo = new \PDO($dsn, $dbUser, $dbPass);
                 $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-                echo "Connected to the database successfully!";
+                $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
                 self::$instance = $pdo;
             } catch (\PDOException $exception) {
                 die("Database connection failed: " . $exception->getMessage());
