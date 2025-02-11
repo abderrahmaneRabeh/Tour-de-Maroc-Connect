@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.container {
+/* .container {
     @apply max-w-7xl mx-auto px-5 md:px-10
-}
+} */
