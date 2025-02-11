@@ -3,6 +3,10 @@ module.exports = {
   content: ["./app/**/*.{php,html,js}"], 
   theme: {
     extend: {
+      colors: {
+        primary: '#dc2626',
+        black: '#000000',   
+      },
     },
     container: {
       center: true,
