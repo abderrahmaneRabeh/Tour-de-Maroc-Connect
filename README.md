@@ -7,3 +7,6 @@ To use the project :
  - inside folder public change 'folderNamehere ' to your folder name .
  - change the configuration inside the app/config/config.php .
  - npm run dev to run tailwindcss
+
+
+ 
