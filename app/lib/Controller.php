@@ -20,11 +20,11 @@ class Controller
     {
         if (file_exists("../app/views/" . $view . ".php")) {
             require_once "../app/inc/header.php";
-            require_once  "../app/views/" . $view . ".php";
+            require_once "../app/views/" . $view . ".php";
             require_once "../app/inc/footer.php";
         } else {
             require_once "../app/inc/header.php";
-            require_once  "../app/views/notFound.php";
+            require_once "../app/views/notFound.php";
             require_once "../app/inc/footer.php";
         }
     }

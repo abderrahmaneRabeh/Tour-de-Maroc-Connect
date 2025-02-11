@@ -2,3 +2,5 @@ node_modules
 vendor
 uploads
 app/config
+public/css/style.css
+.htaccess
