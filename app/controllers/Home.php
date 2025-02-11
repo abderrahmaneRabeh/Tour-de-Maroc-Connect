@@ -1,7 +1,7 @@
 <?php
     use App\Lib\Controller;
-    class Pages extends Controller {
+    class Home extends Controller {
         public function index(){
-            $this->view("pages");
+            $this->view("home");
         }
     }
