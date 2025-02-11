@@ -2,10 +2,10 @@
 use App\Lib\Controller;
 
 
-class Moments extends Controller
+class Etapes extends Controller
 {
     public function index()
     {
-        $this->view("moments");
+        $this->view("etapes");
     }
 }
