@@ -10,14 +10,14 @@
 </head>
 
 <body class="min-h-screen px-4 py-12 bg-gradient-to-br from-blue-50 to-indigo-100 sm:px-6 lg:px-8">
+    <?php
+    require "../app/inc/navbar.php";
+    ?>
     <div class="max-w-3xl mx-auto">
         <!-- Card Container -->
         <div
             class="overflow-hidden transition-all duration-300 transform bg-white shadow-xl rounded-2xl hover:scale-102">
-            <!-- Header -->
-            <div class="p-6 bg-gradient-to-r from-blue-600 to-indigo-600 animate-fade-in">
-                <h1 class="text-3xl font-bold text-center text-white">Details de l'Étape</h1>
-            </div>
+
 
             <!-- Content -->
             <div class="p-8 space-y-6">
