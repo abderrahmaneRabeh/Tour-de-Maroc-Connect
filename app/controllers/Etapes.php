@@ -15,4 +15,9 @@ class Etapes extends Controller
         $ObjEtape = EtapeModel::getEtapeById($id);
         $this->view("etapDetails", $ObjEtape);
     }
+
+    public function podium($id)
+    {
+        $this->view("podium");
+    }
 }
