@@ -7,9 +7,12 @@ class Etapes extends Controller
     public function index()
     {
         $ObjEtape = EtapeModel::getAllEtapes();
-
-        // var_dump($ObjEtape);
-
         $this->view("etapes", $ObjEtape);
+    }
+
+    public function details($id)
+    {
+        $ObjEtape = EtapeModel::getEtapeById($id);
+        $this->view("etapDetails", $ObjEtape);
     }
 }

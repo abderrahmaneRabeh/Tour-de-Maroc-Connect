@@ -40,4 +40,26 @@ class EtapeModel
 
         return $EtapObjects;
     }
+
+    public static function getEtapeById($id)
+    {
+        $db = Database::getConnection();
+        $query = "SELECT * FROM etapes WHERE id = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $etape = $stmt->fetch();
+
+        return new Etape(
+            $etape['nom'],
+            $etape['lieu_depart'],
+            $etape['lieu_arrivee'],
+            $etape['distance_km'],
+            $etape['date_depart'],
+            $etape['date_arrive'],
+            $etape['categorie_id'],
+            $etape['difficulte'],
+            $etape['id']
+        );
+    }
 }
