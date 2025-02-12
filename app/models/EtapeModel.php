@@ -34,6 +34,7 @@ class EtapeModel
                 $etape['date_arrive'],
                 $etape['categorie_id'],
                 $etape['difficulte'],
+                $etape['region'],
                 $etape['id']
             );
         }
@@ -59,7 +60,28 @@ class EtapeModel
             $etape['date_arrive'],
             $etape['categorie_id'],
             $etape['difficulte'],
+            $etape['region'],
             $etape['id']
         );
+    }
+    public static function filterData($region, $difficulte)
+    {
+        $region = "%$region%";
+        $db = Database::getConnection();
+
+        if (empty($difficulte)) {
+            $query = "SELECT * FROM etapes e WHERE e.region ILIKE :region";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':region', $region);
+        } else {
+            $query = "SELECT * FROM etapes e WHERE e.region = :region OR e.difficulte = :difficulte";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':difficulte', $difficulte);
+            $stmt->bindParam(':region', $region);
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll();
+
     }
 }

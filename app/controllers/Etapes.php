@@ -22,4 +22,14 @@ class Etapes extends Controller
         $ObjEtape = ResultatEtapesModel::getEtapPodium($id);
         $this->view("podium", $ObjEtape);
     }
+
+    public function filter()
+    {
+        if (isset($_GET['region']) && isset($_GET['difficulte'])) {
+            $filteredData = EtapeModel::filterData($_GET['region'], $_GET['difficulte']);
+        } else {
+            $filteredData = EtapeModel::getAllEtapes();
+        }
+        echo json_encode($filteredData);
+    }
 }
