@@ -13,17 +13,15 @@
                 <h1 class="xl:text-7xl lg:text-6xl md:text-5xl text-4xl font-bold">Welcome to </h1>
                 <h1 class="xl:text-6xl lg:text-6xl md:text-5xl text-4xl font-bold bg-text">PDALWAYS</h1>
                 <!--  -->
-                <p class="lg:text-2xl sm:text-xl text-lg lg:my-6 my-2">PEDALWAY website with live updates,
+                <p class="my-2 text-lg lg:text-2xl sm:text-xl lg:my-6">PEDALWAY website with live updates,
                     exclusive content, race highlights, and fan interaction, keeping users engaged and excited
                     throughout the event.</p>
 
                 <!-- Buttons -->
-                <div class="flex sm:flex-row flex-col gap-4 lg:mt-8 mt-4 w-full max-w-2xl">
+                <div class="flex flex-col w-full max-w-2xl gap-4 mt-4 sm:flex-row lg:mt-8">
                     <div class="relative flex-1">
-                        <input type="text" placeholder="Search for events, races, or updates..." class="w-full px-6 py-4 text-lg bg-white/10 border border-white/20 rounded-lg 
-                   text-white placeholder-gray-300 outline-none focus:border-white 
-                   backdrop-blur-sm transition-all duration-300">
-                        <button class="absolute right-4 top-1/2 -translate-y-1/2">
+                        <input type="text" placeholder="Search for events, races, or updates..." class="w-full px-6 py-4 text-lg text-white placeholder-gray-300 transition-all duration-300 border rounded-lg outline-none bg-white/10 border-white/20 focus:border-white backdrop-blur-sm">
+                        <button class="absolute -translate-y-1/2 right-4 top-1/2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                                 stroke="currentColor" class="w-6 h-6 text-white">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -38,6 +36,7 @@
     </div>
 
 
+
     <div class="max-w-7xl mx-auto px-4 py-12">
         <h1 class="text-3xl font-bold italic mb-4">BEST BIKERS</h1>
         <p class="text-lg font-light">- Eddy Merckx – 5 wins, dominant and versatile.</p>
@@ -45,75 +44,75 @@
         <p class="text-lg font-light mb-4">- Miguel Indurain – 5 consecutive wins, time trial specialist.</p>
 
         <!-- Product Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             <!-- Maillots Card -->
-            <div class="relative group overflow-hidden rounded-lg">
+            <div class="relative overflow-hidden rounded-lg group">
                 <!-- Gradient Overlay on Hover -->
                 <div
-                    class="absolute inset-0 bg-gradient-to-b from-transparent to-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    class="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-b from-transparent to-black/70 group-hover:opacity-100">
                 </div>
 
                 <!-- Image -->
-                <div class="aspect-square bg-gray-100">
+                <div class="bg-gray-100 aspect-square">
                     <img src="<?= URLROOT . '/public/img/racere1.jpg' ?>" alt="Maillots"
-                        class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" />
+                        class="object-cover object-center w-full h-full transition-transform duration-300 group-hover:scale-105" />
                 </div>
 
                 <!-- Content -->
-                <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
+                <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-white">
                     <h2
-                        class="text-2xl font-bold mb-4 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-300">
+                        class="mb-4 text-2xl font-bold transition-transform duration-300 transform translate-y-8 group-hover:translate-y-0">
                         MAILLOTS
                     </h2>
 
                     <button
-                        class="bg-red-600 text-white px-6 py-2 rounded font-semibold opacity-0 transform translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black">
+                        class="px-6 py-2 font-semibold text-white transition-all duration-300 transform translate-y-4 bg-red-600 rounded opacity-0 group-hover:translate-y-0 group-hover:opacity-100 hover:bg-black">
                         DÉCOUVRIR
                     </button>
                 </div>
             </div>
 
             <!-- Lifestyle Card -->
-            <div class="relative group overflow-hidden rounded-lg">
+            <div class="relative overflow-hidden rounded-lg group">
                 <div
-                    class="absolute inset-0 bg-gradient-to-b from-transparent to-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    class="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-b from-transparent to-black/70 group-hover:opacity-100">
                 </div>
 
-                <div class="aspect-square bg-gray-100">
+                <div class="bg-gray-100 aspect-square">
                     <img src="<?= URLROOT . '/public/img/racere2.webp' ?>" alt="Lifestyle"
-                        class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" />
+                        class="object-cover object-center w-full h-full transition-transform duration-300 group-hover:scale-105" />
                 </div>
 
-                <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
+                <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-white">
                     <h2
-                        class="text-2xl font-bold mb-4 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-300">
+                        class="mb-4 text-2xl font-bold transition-transform duration-300 transform translate-y-8 group-hover:translate-y-0">
                         LIFESTYLE
                     </h2>
                     <button
-                        class="bg-red-600 text-white px-6 py-2 rounded font-semibold opacity-0 transform translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black">
+                        class="px-6 py-2 font-semibold text-white transition-all duration-300 transform translate-y-4 bg-red-600 rounded opacity-0 group-hover:translate-y-0 group-hover:opacity-100 hover:bg-black">
                         DÉCOUVRIR
                     </button>
                 </div>
             </div>
 
             <!-- Accessoires Card -->
-            <div class="relative group overflow-hidden rounded-lg">
+            <div class="relative overflow-hidden rounded-lg group">
                 <div
-                    class="absolute inset-0 bg-gradient-to-b from-transparent to-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    class="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-b from-transparent to-black/70 group-hover:opacity-100">
                 </div>
 
-                <div class="aspect-square bg-gray-100">
+                <div class="bg-gray-100 aspect-square">
                     <img src="<?= URLROOT . '/public/img/racere3.jpg' ?>" alt="Accessoires"
-                        class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" />
+                        class="object-cover object-center w-full h-full transition-transform duration-300 group-hover:scale-105" />
                 </div>
 
-                <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
+                <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-white">
                     <h2
-                        class="text-2xl font-bold mb-4 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-300">
+                        class="mb-4 text-2xl font-bold transition-transform duration-300 transform translate-y-8 group-hover:translate-y-0">
                         ACCESSOIRES
                     </h2>
                     <button
-                        class="bg-red-600 text-white px-6 py-2 rounded font-semibold opacity-0 transform translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black">
+                        class="px-6 py-2 font-semibold text-white transition-all duration-300 transform translate-y-4 bg-red-600 rounded opacity-0 group-hover:translate-y-0 group-hover:opacity-100 hover:bg-black">
                         DÉCOUVRIR
                     </button>
                 </div>

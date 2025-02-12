@@ -1,11 +1,8 @@
 <?php
-
-// namespace App\Controllers;
-
 use App\Lib\Controller;
 
 
-class Cyclistes extends Controller
+class Admin extends Controller
 {
     public function statistiques()
     {
