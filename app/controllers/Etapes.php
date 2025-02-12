@@ -1,6 +1,7 @@
 <?php
 use App\Lib\Controller;
 use App\models\EtapeModel;
+use App\models\ResultatEtapesModel;
 
 class Etapes extends Controller
 {
@@ -18,6 +19,7 @@ class Etapes extends Controller
 
     public function podium($id)
     {
-        $this->view("podium");
+        $ObjEtape = ResultatEtapesModel::getEtapPodium($id);
+        $this->view("podium", $ObjEtape);
     }
 }

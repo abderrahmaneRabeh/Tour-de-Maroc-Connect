@@ -4,138 +4,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Podium des Cyclistes</title>
+    <title>Classement des Cyclistes</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
     <style>
-        .podium-place {
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.8s ease-out;
+        .grid-pattern {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
-        .podium-place.show {
-            transform: translateY(0);
-            opacity: 1;
+        .standings-row {
+            transition: transform 0.2s ease;
         }
 
-        .shine {
-            position: relative;
-            overflow: hidden;
+        .standings-row:hover {
+            transform: translateX(5px);
+            background: rgba(0, 0, 0, 0.02);
         }
 
-        .shine::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(to bottom right,
-                    rgba(255, 255, 255, 0) 0%,
-                    rgba(255, 255, 255, 0.1) 50%,
-                    rgba(255, 255, 255, 0) 100%);
-            transform: rotate(45deg);
-            animation: shine 3s infinite;
+        .podium-block {
+            transition: all 0.3s ease;
         }
 
-        @keyframes shine {
-            0% {
-                transform: translateX(-100%) rotate(45deg);
-            }
-
-            100% {
-                transform: translateX(100%) rotate(45deg);
-            }
-        }
-
-        .glow {
-            animation: glow 2s infinite alternate;
-        }
-
-        @keyframes glow {
-            from {
-                box-shadow: 0 0 10px -5px rgba(255, 215, 0, 0.6);
-            }
-
-            to {
-                box-shadow: 0 0 20px 5px rgba(255, 215, 0, 0.8);
-            }
+        .podium-block:hover {
+            transform: translateY(-5px);
         }
     </style>
 </head>
 
-<body class="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-blue-900 to-purple-900">
-    <div class="container max-w-4xl mx-auto">
-        <h1 class="mb-12 text-4xl font-bold text-center text-white glow">Podium des Champions</h1>
+<body class="min-h-screen p-8 bg-white">
+    <div class="container max-w-6xl mx-auto">
+        <h1 class="mb-16 text-4xl font-bold tracking-wider text-center text-gray-800">
+            CLASSEMENT
+        </h1>
 
-        <div class="relative flex items-end justify-center space-x-4">
-            <!-- 2ème place -->
-            <div class="podium-place" data-delay="100">
-                <div class="flex flex-col items-center">
-                    <div class="w-64 p-4 mb-4 bg-white rounded-lg shadow-lg shine">
-                        <div class="w-full h-48 mb-4 overflow-hidden bg-gray-200 rounded-lg">
-                            <img src="https://static.yabiladi.com/files/articles/89360_b3f6693acaa816cd3c10353779fbfc6b20200218120022_thumb_565.png"
-                                alt="Jean Dupont" class="object-cover w-full h-full" />
-                        </div>
-                        <div class="text-center">
-                            <span class="text-2xl font-bold text-gray-600">2ème</span>
-                            <h2 class="text-xl font-semibold">Jean Dupont</h2>
-                            <p class="text-gray-500">2:45:30</p>
+        <!-- <?php
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
+
+        ?> -->
+
+        <!-- Top 3 Podium -->
+        <div class="mb-16 grid-pattern">
+            <div class="flex items-end justify-center gap-8">
+                <!-- 2ème place -->
+                <div class="text-center podium-block w-72">
+                    <img src="https://static.yabiladi.com/files/articles/89360_b3f6693acaa816cd3c10353779fbfc6b20200218120022_thumb_565.png"
+                        alt="Deuxième"
+                        class="object-cover w-48 h-48 mx-auto mb-4 border-8 border-gray-200 rounded-full" />
+                    <div class="p-6 bg-white rounded-lg shadow-lg">
+                        <div class="mb-1 text-sm text-gray-600"><?php echo $data[1]->points; ?> PTS</div>
+                        <h2 class="text-2xl font-bold text-gray-800"><?php echo $data[1]->nom; ?></h2>
+                        <div class="text-sm text-gray-500"><?php echo $data[1]->equipe; ?></div>
+                        <div class="relative w-full h-24 mt-4 bg-gray-200 rounded-t-lg">
+                            <span
+                                class="absolute text-3xl font-bold text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">2</span>
                         </div>
                     </div>
-                    <div class="w-32 h-32 bg-gray-300 rounded-t-lg"></div>
                 </div>
-            </div>
 
-            <!-- 1ère place -->
-            <div class="podium-place" data-delay="0">
-                <div class="flex flex-col items-center">
-                    <div class="w-64 p-4 mb-4 bg-white rounded-lg shadow-lg shine glow">
-                        <div class="w-full h-48 mb-4 overflow-hidden bg-gray-200 rounded-lg">
-                            <img src="https://static.yabiladi.com/files/articles/89360_b3f6693acaa816cd3c10353779fbfc6b20200218120022_thumb_565.png"
-                                alt="Pierre Martin" class="object-cover w-full h-full" />
-                        </div>
-                        <div class="text-center">
-                            <span class="text-2xl font-bold text-yellow-500">1er</span>
-                            <h2 class="text-xl font-semibold">Pierre Martin</h2>
-                            <p class="text-gray-500">2:43:15</p>
+                <!-- 1ère place -->
+                <div class="-mb-8 text-center podium-block w-72">
+                    <img src="https://static.yabiladi.com/files/articles/89360_b3f6693acaa816cd3c10353779fbfc6b20200218120022_thumb_565.png"
+                        alt="Premier"
+                        class="object-cover w-56 h-56 mx-auto mb-4 border-8 border-gray-800 rounded-full" />
+                    <div class="p-6 bg-white rounded-lg shadow-lg">
+                        <div class="mb-1 text-sm text-gray-600"><?php echo $data[0]->points; ?> PTS</div>
+                        <h2 class="text-2xl font-bold text-gray-800"><?php echo $data[0]->nom; ?></h2>
+                        <div class="text-sm text-gray-500"><?php echo $data[0]->equipe; ?></div>
+                        <div class="relative w-full h-32 mt-4 bg-gray-800 rounded-t-lg">
+                            <span
+                                class="absolute text-3xl font-bold text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">1</span>
                         </div>
                     </div>
-                    <div class="w-32 h-40 bg-yellow-400 rounded-t-lg"></div>
                 </div>
-            </div>
 
-            <!-- 3ème place -->
-            <div class="podium-place" data-delay="200">
-                <div class="flex flex-col items-center">
-                    <div class="w-64 p-4 mb-4 bg-white rounded-lg shadow-lg shine">
-                        <div class="w-full h-48 mb-4 overflow-hidden bg-gray-200 rounded-lg">
-                            <img src="https://static.yabiladi.com/files/articles/89360_b3f6693acaa816cd3c10353779fbfc6b20200218120022_thumb_565.png"
-                                alt="Lucas Bernard" class="object-cover w-full h-full" />
-                        </div>
-                        <div class="text-center">
-                            <span class="text-2xl font-bold text-amber-700">3ème</span>
-                            <h2 class="text-xl font-semibold">Lucas Bernard</h2>
-                            <p class="text-gray-500">2:46:45</p>
+                <!-- 3ème place -->
+                <div class="text-center podium-block w-72">
+                    <img src="https://static.yabiladi.com/files/articles/89360_b3f6693acaa816cd3c10353779fbfc6b20200218120022_thumb_565.png"
+                        alt="Troisième"
+                        class="object-cover w-48 h-48 mx-auto mb-4 border-8 border-gray-400 rounded-full" />
+                    <div class="p-6 bg-white rounded-lg shadow-lg">
+                        <div class="mb-1 text-sm text-gray-600"><?php echo $data[2]->points; ?> PTS</div>
+                        <h2 class="text-2xl font-bold text-gray-800"><?php echo $data[2]->nom; ?></h2>
+                        <div class="text-sm text-gray-500"><?php echo $data[2]->equipe; ?></div>
+                        <div class="relative w-full h-16 mt-4 bg-gray-400 rounded-t-lg">
+                            <span
+                                class="absolute text-3xl font-bold text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">3</span>
                         </div>
                     </div>
-                    <div class="w-32 h-24 rounded-t-lg bg-amber-600"></div>
                 </div>
             </div>
         </div>
+
+        <!-- Classement Complet -->
+        <div class="overflow-hidden bg-white rounded-lg shadow-lg">
+            <div class="space-y-1">
+                <!-- Lignes du classement 4-10 -->
+                <?php for ($i = 3; $i < count($data); $i++): ?>
+                    <div class="flex items-center p-4 border-l-4 border-gray-200 standings-row">
+                        <div class="w-12 font-bold text-gray-600"><?= $i + 1 ?></div>
+                        <div class="flex-1">
+                            <div class="font-bold text-gray-800"><?= $data[$i]->nom ?></div>
+                            <div class="text-sm text-gray-500"><?= $data[$i]->points ?> PTS</div>
+                        </div>
+                    </div>
+                <?php endfor; ?>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center">
+            <button class="px-8 py-2 font-bold text-white transition-colors bg-gray-800 rounded hover:bg-gray-900">
+                VOIR CLASSEMENT COMPLET
+            </button>
+        </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const podiumPlaces = document.querySelectorAll('.podium-place');
-
-            podiumPlaces.forEach(place => {
-                setTimeout(() => {
-                    place.classList.add('show');
-                }, place.dataset.delay);
-            });
-        });
-    </script>
 </body>
 
 </html>
