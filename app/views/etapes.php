@@ -28,13 +28,11 @@
                 echo "<p class='text-gray-600'><strong>Lieu départ :</strong> " . $etape->lieu_depart . "</p>";
                 echo "<p class='text-gray-600'><strong>Lieu arrivée :</strong> " . $etape->lieu_arrivee . "</p>";
                 echo "<p class='text-gray-600'><strong>Distance :</strong> " . $etape->distance_km . " km</p>";
-                echo "<p class='text-gray-600'><strong>Date départ :</strong> " . $etape->date_depart . "</p>";
-                echo "<p class='text-gray-600'><strong>Date arrivée :</strong> " . $etape->date_arrive . "</p>";
                 echo "<p class='text-gray-600'><strong>Catégorie :</strong> " . $etape->categorie_id . "</p>";
                 echo "<p class='text-gray-600'><strong>Difficulté :</strong> " . $etape->difficulte . "</p>";
 
                 echo "<div class='mt-4 text-center'>";
-                echo "<a href='Etapes/details/" . $etape->id . "' class='px-5 py-2 text-white transition duration-300 bg-blue-500 rounded-full hover:bg-blue-600'>";
+                echo "<a href='http://localhost/TourMaroc/Etapes/details/" . $etape->id . "' class='px-5 py-2 text-white transition duration-300 bg-blue-500 rounded-full hover:bg-blue-600'>";
                 echo "📌 Voir détails";
                 echo "</a>";
                 echo "</div>";
