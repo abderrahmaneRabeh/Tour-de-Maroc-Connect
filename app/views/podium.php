@@ -33,10 +33,11 @@
 </head>
 
 <body class="min-h-screen p-8 bg-white">
-    <div class="container max-w-6xl mx-auto">
-        <h1 class="mb-16 text-4xl font-bold tracking-wider text-center text-gray-800">
-            CLASSEMENT
-        </h1>
+    <?php
+    require "../app/inc/navbar.php";
+    ?>
+    <div class="container max-w-6xl mx-auto mt-10">
+
 
         <!-- <?php
         echo "<pre>";

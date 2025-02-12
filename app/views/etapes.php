@@ -9,14 +9,9 @@
 </head>
 
 <body class="bg-gray-100">
-
-    <!-- Header Section -->
-    <header class="py-6 text-white bg-green-700 shadow-md">
-        <div class="max-w-6xl mx-auto text-center">
-            <h1 class="text-4xl font-bold">🏆 Tour du Maroc - Étapes</h1>
-            <p class="mt-2 text-lg">Découvrez les moments forts des étapes passées</p>
-        </div>
-    </header>
+    <?php
+    require "../app/inc/navbar.php";
+    ?>
 
     <!-- Main Content -->
     <main class="max-w-6xl px-4 py-10 mx-auto">
