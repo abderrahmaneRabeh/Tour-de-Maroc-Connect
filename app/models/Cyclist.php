@@ -8,45 +8,53 @@ class Cyclist {
     public function __construct() {
         $this->db = Database::getConnection();    }
     
-    public function getProfile($id) {
-        return $this->db->query(
-            "SELECT * FROM cyclistes WHERE id = ?",
-            [$id]
-        )->fetch();
-    }
-    
-    public function getPerformances($id) {
-        return $this->db->query(
-            "SELECT * FROM resultats_etapes WHERE cycliste_id = ? ORDER BY date",
-            [$id]
-        )->fetchAll();
-    }
-    
-    public function getPoints($id) {
-        $result = $this->db->query(
-            "SELECT points FROM cyclistes WHERE id = ?",
-            [$id]
-        )->fetch();
-        return $result ? $result['points'] : 0;
-    }
-
-   
-    public function searchCyclists($term) {
-        $sql="SELECT c.id, c.nom, c.points, e.nom as equipe_nom
-                          FROM cyclistes c
-                          LEFT JOIN equipes e ON c.equipe_id = e.id
-                          WHERE c.nom ILIKE :term
-                          OR e.nom ILIKE :term
-                          ORDER BY c.points DESC
-                          LIMIT 10";
+        public function getProfile($id) {
+            $stmt = $this->db->prepare("SELECT * FROM cyclistes WHERE id = ?");
+            $stmt->execute([$id]);
+            return $stmt->fetch();
+        }
         
-        $stmt = $this->db->prepare($sql);
-        $term = "%{$term}%";
-        $stmt->bindParam(':term', $term, \PDO::PARAM_STR);
-        $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    
-    }
+        public function getPerformances($id) {
+            $stmt = $this->db->prepare("SELECT * FROM resultats_etapes WHERE cycliste_id = ? ORDER BY date");
+            $stmt->execute([$id]);
+            return $stmt->fetchAll();
+        }
+        
+        public function getPoints($id) {
+            $stmt = $this->db->prepare("SELECT points FROM cyclistes WHERE id = ?");
+            $stmt->execute([$id]);
+            $result = $stmt->fetch();
+            return $result ? $result['points'] : 0;
+        }
+        
+
+        public function getAllCyclists() {
+            $query = "SELECT c.id, c.nom as name, e.nom as team, c.nationalite as country, c.img as image 
+                      FROM cyclistes c 
+                      LEFT JOIN equipes e ON c.equipe_id = e.id
+                      ORDER BY c.nom";
+            
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        }
+   
+        public function searchCyclists($searchTerm) {
+            $query = "SELECT c.id, c.nom as name, e.nom as team, c.nationalite as country, c.img as image 
+                      FROM cyclistes c 
+                      LEFT JOIN equipes e ON c.equipe_id = e.id
+                      WHERE c.nom LIKE :term 
+                      OR e.nom LIKE :term 
+                      OR c.nationalite LIKE :term";
+            
+            $stmt = $this->db->prepare($query);
+            $term = "%{$searchTerm}%";
+            $stmt->bindParam(':term', $term, \PDO::PARAM_STR);
+            $stmt->execute();
+            
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        }
 
     public function searchTeams($term) {
         $this->db->query("SELECT id, nom, pays, date_creation
@@ -71,5 +79,20 @@ class Cyclist {
         
         $this->db->bind(':term', "%$term%");
         return $this->db->resultSet();
+    }
+
+
+    public function getTotalPoints($cycliste_id) {
+        $stmt = $this->db->prepare("
+            SELECT 
+                c.points + COALESCE(SUM(r.points), 0) AS total_points
+            FROM cyclistes c
+            LEFT JOIN resultats_etapes r ON c.id = r.cycliste_id
+            WHERE c.id = ?
+            GROUP BY c.points
+        ");
+        $stmt->execute([$cycliste_id]);
+        $result = $stmt->fetch();
+        return $result ? $result['total_points'] : 0;
     }
 }

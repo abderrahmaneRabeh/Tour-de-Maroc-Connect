@@ -20,23 +20,25 @@ class Cyclists extends Controller {
         $this->view("cyclist/stats");
     }
 
-    public function ajaxSearch() {
-        header('Content-Type: application/json');
+    
+
+    // public function ajaxSearch() {
+    //     header('Content-Type: application/json');
         
-        $searchTerm = isset($_GET['term']) ? trim($_GET['term']) : '';
+    //     $searchTerm = isset($_GET['term']) ? trim($_GET['term']) : '';
         
-        if (!empty($searchTerm)) {
-            $cyclists = $this->cyclistModel->searchCyclists($searchTerm);
-        } else {
-            $cyclists = [];
-        }
+    //     if (!empty($searchTerm)) {
+    //         $cyclists = $this->cyclistModel->searchCyclists($searchTerm);
+    //     } else {
+    //         $cyclists = [];
+    //     }
         
-        echo json_encode([
-            'success' => true,
-            'searchTerm' => $searchTerm,
-            'cyclists' => $cyclists
-        ]);
-        exit;
-    }
+    //     echo json_encode([
+    //         'success' => true,
+    //         'searchTerm' => $searchTerm,
+    //         'cyclists' => $cyclists
+    //     ]);
+    //     exit;
+    // }
     
 }

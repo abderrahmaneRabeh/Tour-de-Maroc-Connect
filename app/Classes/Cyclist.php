@@ -2,7 +2,7 @@
 namespace App\Classes;
 
 class Cyclist {
-    // Inherited from utilisateurs
+
     private $id;
     private $nom;
     private $email;
@@ -12,7 +12,7 @@ class Cyclist {
     private $points;
     private $date_inscription;
     
-    // Specific to cyclistes
+    
     private $equipe_id;
     private $nationalite;
     private $historique;
