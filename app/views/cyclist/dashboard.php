@@ -43,17 +43,17 @@
                     <!-- Carte Points -->
                     <div class="bg-white p-6 rounded-lg shadow-sm">
                         <h3 class="text-lg font-semibold text-gray-700">Points Totaux</h3>
-                        <p class="text-3xl font-bold mt-2">95</p>
+                        <p class="text-3xl font-bold mt-2"><?= htmlspecialchars($data['stats']['points']) ?></p>
                     </div>
                     <!-- Carte Classement -->
                     <div class="bg-white p-6 rounded-lg shadow-sm">
                         <h3 class="text-lg font-semibold text-gray-700">Classement Actuel</h3>
-                        <p class="text-3xl font-bold mt-2">#3</p>
+                        <p class="text-3xl font-bold mt-2">#<?= htmlspecialchars($data['stats']['ranking']) ?></p>
                     </div>
                     <!-- Carte Vitesse -->
                     <div class="bg-white p-6 rounded-lg shadow-sm">
                         <h3 class="text-lg font-semibold text-gray-700">Vitesse Moyenne</h3>
-                        <p class="text-3xl font-bold mt-2">42.1 km/h</p>
+                        <p class="text-3xl font-bold mt-2"><?= htmlspecialchars($data['stats']['averageSpeed']) ?> km/h</p>
                     </div>
                 </div>
 
@@ -118,24 +118,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <?php foreach ($data['stageResults'] as $result): ?>
                                     <tr class="border-b">
-                                        <td class="px-4 py-2">Étape 1</td>
-                                        <td class="px-4 py-2">42.5</td>
-                                        <td class="px-4 py-2">25</td>
-                                        <td class="px-4 py-2">#3</td>
-                                    </tr>
-                                    <tr class="border-b">
-                                        <td class="px-4 py-2">Étape 2</td>
-                                        <td class="px-4 py-2">40.2</td>
-                                        <td class="px-4 py-2">18</td>
-                                        <td class="px-4 py-2">#5</td>
-                                    </tr>
-                                    <tr class="border-b">
-                                        <td class="px-4 py-2">Étape 3</td>
-                                        <td class="px-4 py-2">44.1</td>
-                                        <td class="px-4 py-2">30</td>
-                                        <td class="px-4 py-2">#1</td>
-                                    </tr>
+                                        <td class="px-4 py-2"><?= htmlspecialchars($result['etape_nom']) ?></td>
+                                        <td class="px-4 py-2"><?= htmlspecialchars($result['vitesse_moy']) ?></td>
+                                        <td class="px-4 py-2"><?= htmlspecialchars($result['points']) ?></td>
+                                        <td class="px-4 py-2">#<?= htmlspecialchars($result['classement']) ?></td>
+                                    </tr>  
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
