@@ -4,20 +4,14 @@ namespace App\Classes;
 
 use App\Classes\User;
 
-class Cyclist extends User
+class Fan extends User
 {
-    // Specific to cyclistes
-    private $equipe_id;
-    private $nationalite;
-    private $historique;
 
 
-    public function __construct($id, $nom, $email, $mot_de_passe,$role, $img, $bio, $points, $date_inscription, $equipe_id, $nationalite, $historique)
+
+    public function __construct($id, $nom, $email, $mot_de_passe,$role, $img, $bio, $points, $date_inscription)
     {
         parent::__construct($id, $nom, $email, $mot_de_passe,$role, $img, $bio, $points, $date_inscription);
-        $this->equipe_id = $equipe_id;
-        $this->nationalite = $nationalite;
-        $this->historique = $historique;
     }
     // Getters
     public function getId()
@@ -55,20 +49,7 @@ class Cyclist extends User
         return $this->date_inscription;
     }
 
-    public function getEquipeId()
-    {
-        return $this->equipe_id;
-    }
 
-    public function getNationalite()
-    {
-        return $this->nationalite;
-    }
-
-    public function getHistorique()
-    {
-        return $this->historique;
-    }
 
     // Setters
     public function setId($id)
@@ -104,21 +85,6 @@ class Cyclist extends User
     public function setPoints($points)
     {
         $this->points = $points;
-    }
-
-    public function setEquipeId($equipe_id)
-    {
-        $this->equipe_id = $equipe_id;
-    }
-
-    public function setNationalite($nationalite)
-    {
-        $this->nationalite = $nationalite;
-    }
-
-    public function setHistorique($historique)
-    {
-        $this->historique = $historique;
     }
 
     public function setDateInscription($date_inscription)
