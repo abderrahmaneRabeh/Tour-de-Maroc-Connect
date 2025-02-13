@@ -33,9 +33,4 @@ class Pages extends Controller
         
         $this->view('index', $data);
     }
-
-    // public function index()
-    // {
-    //     $this->view("index");
-    // }
 }
