@@ -59,7 +59,7 @@
 <!-- Cyclists Section -->
 <div class="max-w-7xl mx-auto px-4 py-8 bg-white/10 backdrop-blur-sm rounded-lg mt-8">
     <?php if (!empty($data['searchTerm'])): ?>
-        <h2 class="text-2xl font-bold text-white mb-4">
+        <h2 class="text-2xl font-bold text-black mb-4">
             Search Results for: "<?= htmlspecialchars($data['searchTerm']) ?>"
         </h2>
     <?php else: ?>
@@ -67,7 +67,7 @@
     <?php endif; ?>
     
     <?php if (empty($data['cyclists'])): ?>
-        <div class="bg-white/10 text-white p-4 rounded-lg">
+        <div class="bg-white/10 text-black p-4 rounded-lg">
             <?php if (!empty($data['searchTerm'])): ?>
                 No cyclists found matching your search criteria.
             <?php else: ?>
@@ -77,22 +77,37 @@
     <?php else: ?>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <?php foreach($data['cyclists'] as $cyclist): ?>
-                <div class="bg-white/20 rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow">
-                    <div class="aspect-square bg-gray-200">
-                        <img src="<?= !empty($cyclist['image']) ? URLROOT . '/public/img/cyclists/' . $cyclist['image'] : URLROOT . '/public/img/default-cyclist.jpg' ?>" 
-                             alt="<?= htmlspecialchars($cyclist['name'] ?? 'Cyclist') ?>"
-                             class="w-full h-full object-cover" />
+                <div class="relative overflow-hidden rounded-lg group">
+                    <!-- Gradient Overlay on Hover -->
+                    <div class="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-b from-transparent to-black/70 group-hover:opacity-100"></div>
+                    
+                    <!-- Image -->
+                    <div class="bg-gray-100 aspect-square">
+                        <img src="<?= htmlspecialchars($cyclist['image']) ?>"
+                            alt="<?= htmlspecialchars($cyclist['name'] ?? 'Cyclist') ?>"
+                            class="object-cover object-center w-full h-full transition-transform duration-300 group-hover:scale-105" />
                     </div>
-                    <div class="p-4 text-white">
-                        <h3 class="text-xl font-semibold"><?= htmlspecialchars($cyclist['name'] ?? 'Unnamed Cyclist') ?></h3>
+                    
+                    <!-- Content -->
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-white">
+                        <h3 class="mb-2 text-xl font-bold transition-transform duration-300 transform translate-y-8 group-hover:translate-y-0">
+                            <?= htmlspecialchars($cyclist['name'] ?? 'Unnamed Cyclist') ?>
+                        </h3>
+                        
                         <?php if(!empty($cyclist['team'])): ?>
-                            <p class="text-gray-200 mt-2">Team: <?= htmlspecialchars($cyclist['team']) ?></p>
+                            <p class="text-gray-200 mb-1 transition-transform duration-300 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
+                                Team: <?= htmlspecialchars($cyclist['team']) ?>
+                            </p>
                         <?php endif; ?>
+                        
                         <?php if(!empty($cyclist['country'])): ?>
-                            <p class="text-gray-200">Country: <?= htmlspecialchars($cyclist['country']) ?></p>
+                            <p class="text-gray-200 mb-3 transition-transform duration-300 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
+                                Country: <?= htmlspecialchars($cyclist['country']) ?>
+                            </p>
                         <?php endif; ?>
-                        <a href="<?= URLROOT ?>/cyclists/profile/<?= $cyclist['id'] ?>" 
-                           class="mt-4 inline-block bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors">
+                        
+                        <a href="<?= URLROOT ?>/cyclists/profile/<?= $cyclist['id'] ?>"
+                            class="px-6 py-2 font-semibold text-white transition-all duration-300 transform translate-y-4 bg-red-600 rounded opacity-0 group-hover:translate-y-0 group-hover:opacity-100 hover:bg-black">
                             View Profile
                         </a>
                     </div>
@@ -100,6 +115,7 @@
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
+</div>
     
     <?php if (!empty($data['searchTerm'])): ?>
         <div class="mt-6">
@@ -112,6 +128,49 @@
         </div>
     <?php endif; ?>
 </div>
+<div class="max-w-7xl mx-auto p-4">
+        <!-- Table Container with horizontal scroll for mobile -->
+        <div class="overflow-x-auto shadow-sm rounded-lg">
+            <table class="w-full text-sm bg-white">
+                <!-- Table Header -->
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-900">Name</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-900">Start Location</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-900">End Location</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-900">Distance (km)</th>
+                        <th class="px-4 py-3 text-center font-semibold text-gray-900">Start Date</th>
+                        <th class="px-4 py-3 text-right font-semibold text-gray-900">End Date</th>
+                        <th class="px-4 py-3 text-right font-semibold text-gray-900">Difficulty</th>
+                    </tr>
+                </thead>
+
+                <!-- Table Body -->
+                <tbody class="divide-y divide-gray-200">
+                 
+                    <?php
+                    foreach ($data['ObjEtape'] as $etape) {
+                        echo "<tr class='bg-gray-50 transition-colors'>
+                                 <td class='px-4 py-3 text-blue-600 hover:text-blue-800'>
+                                   <a href='#' class='hover:underline'> $etape->nom  </a>
+                                 </td>
+                                 <td class='px-4 py-3 text-gray-600'> $etape->lieu_depart  </td>
+                                 <td class='px-4 py-3 text-gray-600'>$etape->lieu_arrivee  </td>
+                                 <td class='px-4 py-3 text-gray-600'> $etape->distance_km  </td>
+                                 <td class='px-4 py-3 text-center text-gray-600'>  $etape->date_depart  </td>
+                                 <td class='px-4 py-3 text-right font-mono text-gray-600'> $etape->date_arrive  </td>
+                                 <td class='px-4 py-3 text-right font-mono text-gray-600'> $etape->difficulte  </td>
+                               </tr>";
+                    }
+                    ?>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+
+
 
 </body>
 
