@@ -150,7 +150,7 @@
                 <tbody class="divide-y divide-gray-200">
 
                     <?php
-                    foreach ($data as $etape) {
+                    foreach ($data['ObjEtape'] as $etape) {
                         echo "<tr class='transition-colors bg-gray-50'>
                                  <td class='px-4 py-3 text-blue-600 hover:text-blue-800'>
                                    <a href='#' class='hover:underline'> $etape->nom  </a>
