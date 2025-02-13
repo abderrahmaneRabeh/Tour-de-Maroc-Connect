@@ -80,3 +80,4 @@ class Cyclists extends Controller
         }
     }
 }
+

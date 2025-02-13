@@ -6,17 +6,18 @@ CREATE TABLE utilisateurs (
     email VARCHAR(255) UNIQUE NOT NULL,
     mot_de_passe TEXT NOT NULL,
     img text,
-    bio text not null,
+    bio text ,
+    role VARCHAR(50) CHECK (role IN ('fan', 'cycliste', 'admin')) NOT NULL,
     points INT DEFAULT 0,
     date_inscription TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE fans (
-PRIMARY KEY (id)
+
 ) INHERITS (utilisateurs);
 
 CREATE TABLE admin (
-PRIMARY KEY (id)
+
 ) INHERITS (utilisateurs);
 
 CREATE TABLE equipes (
@@ -97,7 +98,7 @@ CREATE TABLE signalements (
     etape_id INT REFERENCES etapes(id) ON DELETE CASCADE,
     description TEXT NOT NULL,
     date_signalement TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    is_archived BOOLEAN
+    is_archived BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE notifications (
@@ -111,5 +112,6 @@ CREATE TABLE inscriptions (
     fan_id INT REFERENCES fans(id) ON DELETE CASCADE,
     etape_id INT REFERENCES etapes(id) ON DELETE CASCADE,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    PRIMARY KEY (fan_id, etape_id)
 )
 
