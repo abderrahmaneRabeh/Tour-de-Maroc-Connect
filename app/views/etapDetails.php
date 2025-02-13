@@ -150,8 +150,26 @@
                     </div>
                 </div>
 
+                <!-- Button to like -->
+                <div class="mt-6 text-center">
+                    <?php if (isset($_SESSION['user']['id'])): ?>
+                        <a href="<?= URLROOT ?>/Like/add/<?= $_SESSION['user']['id'] ?>/<?= $data->id ?>"
+                            class="px-6 py-2 text-white transition duration-300 bg-green-600 rounded-full hover:bg-green-700">
+                            J'aime
+                        </a>
+                    <?php endif; ?>
+                </div>
+
                 <!-- Button to view podium -->
                 <div class="mt-6 text-center">
+                    <!-- <?php
+
+                    echo "<pre>";
+                    print_r($_SESSION['user']['id']);
+                    echo "  ";
+                    print_r($data->id);
+                    echo "</pre>";
+                    ?> -->
                     <a href="<?= URLROOT ?>/Etapes/podium/<?= $data->id ?>"
                         class="px-6 py-2 text-white transition duration-300 bg-indigo-600 rounded-full hover:bg-indigo-700">
                         Voir Podium
