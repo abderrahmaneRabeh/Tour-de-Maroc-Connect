@@ -1,3 +1,4 @@
+<?php require_once "../app/config/config.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +34,7 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-500">Nom de l'Étape</p>
-                            <p class="text-lg font-semibold text-gray-800"><?= $data->nom ?></p>
+                            <p class="text-lg font-semibold text-gray-800"><?= $data['ObjEtape']->nom ?></p>
                         </div>
                     </div>
                 </div>
@@ -53,7 +54,7 @@
                             </div>
                             <div>
                                 <p class="text-sm text-gray-500">Lieu depart</p>
-                                <p class="text-lg font-semibold text-gray-800"><?= $data->lieu_depart ?></p>
+                                <p class="text-lg font-semibold text-gray-800"><?= $data['ObjEtape']->lieu_depart ?></p>
                             </div>
                         </div>
                     </div>
@@ -70,7 +71,8 @@
                             </div>
                             <div>
                                 <p class="text-sm text-gray-500">Lieu arrive</p>
-                                <p class="text-lg font-semibold text-gray-800"><?= $data->lieu_arrivee ?></p>
+                                <p class="text-lg font-semibold text-gray-800"><?= $data['ObjEtape']->lieu_arrivee ?>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -88,7 +90,7 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-500">Distance</p>
-                            <p class="text-lg font-semibold text-gray-800"><?= $data->distance_km ?> km</p>
+                            <p class="text-lg font-semibold text-gray-800"><?= $data['ObjEtape']->distance_km ?> km</p>
                         </div>
                     </div>
                 </div>
@@ -108,7 +110,7 @@
                             </div>
                             <div>
                                 <p class="text-sm text-gray-500">Date depart</p>
-                                <p class="text-lg font-semibold text-gray-800"><?= $data->date_depart ?></p>
+                                <p class="text-lg font-semibold text-gray-800"><?= $data['ObjEtape']->date_depart ?></p>
                             </div>
                         </div>
                     </div>
@@ -126,7 +128,7 @@
                             </div>
                             <div>
                                 <p class="text-sm text-gray-500">Date arrive</p>
-                                <p class="text-lg font-semibold text-gray-800"><?= $data->date_arrive ?></p>
+                                <p class="text-lg font-semibold text-gray-800"><?= $data['ObjEtape']->date_arrive ?></p>
                             </div>
                         </div>
                     </div>
@@ -144,14 +146,38 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-500">Categorie</p>
-                            <p class="text-lg font-semibold text-gray-800"><?= $data->categorie_id ?></p>
+                            <p class="text-lg font-semibold text-gray-800"><?= $data['ObjEtape']->categorie_id ?></p>
                         </div>
                     </div>
                 </div>
 
+                <!-- Button to like -->
+                <div class="mt-6 text-center">
+                    <?php if (isset($_SESSION['user']['id'])): ?>
+                        <?php if ($data['isAdded']): ?>
+                            <p class="px-6 py-2 text-white transition duration-300 bg-blue-600 rounded-full">
+                                Vous avez aimé cette étape
+                            </p>
+                        <?php else: ?>
+                            <a href="<?= URLROOT ?>/Like/add/<?= $_SESSION['user']['id'] ?>/<?= $data['ObjEtape']->id ?>"
+                                class="px-6 py-2 text-white transition duration-300 bg-green-600 rounded-full hover:bg-green-700">
+                                J'aime
+                            </a>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </div>
+
                 <!-- Button to view podium -->
                 <div class="mt-6 text-center">
-                    <a href="<?= URLROOT ?>/Etapes/podium/<?= $data->id ?>"
+                    <!-- <?php
+
+                    echo "<pre>";
+                    print_r($_SESSION['user']['id']);
+                    echo "  ";
+                    print_r($data['ObjEtape']->id);
+                    echo "</pre>";
+                    ?> -->
+                    <a href="<?= URLROOT ?>/Etapes/podium/<?= $data['ObjEtape']->id ?>"
                         class="px-6 py-2 text-white transition duration-300 bg-indigo-600 rounded-full hover:bg-indigo-700">
                         Voir Podium
                     </a>
