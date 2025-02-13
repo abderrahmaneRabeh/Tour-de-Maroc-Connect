@@ -62,7 +62,7 @@
                             <td class="p-3"><?= $etape->region ?></td>
                             <td class="p-3"><?= $etape->difficulte ?></td>
                             <td class="p-3 text-center">
-                                <a href="http://localhost/PEDALWAY/Etapes/details/<?= $etape->id ?>"
+                                <a href="<?= URLROOT ?>/Etapes/details/<?= $etape->id ?>"
                                     class="px-4 py-2 text-white transition-transform transform bg-blue-500 rounded hover:bg-blue-600 hover:scale-105">📌
                                     Voir détails</a>
                             </td>
@@ -83,7 +83,7 @@
                 let difficulte = document.getElementById('difficulte').value;
                 let myTable = document.getElementById('myTable');
 
-                fetch(`http://localhost/PEDALWAY/Etapes/filter?difficulte=${difficulte}&region=${region}`)
+                fetch(`<?= URLROOT ?>/Etapes/filter?difficulte=${difficulte}&region=${region}`)
                     .then(response => response.json())
                     .then(data => {
                         myTable.innerHTML = '';
@@ -105,7 +105,7 @@
                                 <td class="p-3">${etape.region}</td>
                                 <td class="p-3">${etape.difficulte}</td>
                                 <td class="p-3 text-center">
-                                    <a href="http://localhost/PEDALWAY/Etapes/details/${etape.id}"
+                                    <a href="<?= URLROOT ?>/Etapes/details/${etape.id}"
                                         class="px-4 py-2 text-white transition-transform transform bg-blue-500 rounded hover:bg-blue-600 hover:scale-105">📌 Voir détails</a>
                                 </td>
                             `;
