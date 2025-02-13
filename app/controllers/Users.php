@@ -13,7 +13,7 @@ class Users extends Controller
         //     exit();
         // }
 
-            $this->view("/auth/signup");
+        $this->view("/auth/signup");
     }
     public function login()
     {
@@ -40,12 +40,11 @@ class Users extends Controller
                         "password" => $password,
                     ];
                     $user = $this->modal("User");
-                    if ($user->login($data)) {
-                        echo json_encode(['success' => 'Login successful.']);
-                        exit();
+                    $result = $user->login($data);
+                    if ($result["success"]) {
+                        echo json_encode(["success" => "You are loged successfully", "redirectUrl" => $result['redirect']]);
                     } else {
-                        echo json_encode(['error' => 'Invalid email or password.']);
-                        exit();
+                        echo json_encode(["error" => $result["error"]]);
                     }
                 } catch (\Throwable $th) {
                     echo json_encode(["error" => $th->getMessage()]);
@@ -60,7 +59,8 @@ class Users extends Controller
         session_destroy();
         redirect("");
     }
-    public function forbidden(){
+    public function forbidden()
+    {
         $this->view("forbidden");
     }
 }
