@@ -11,7 +11,7 @@
             <div
                 class="h-full xl:w-[50%] md:w-[60%] sm:w-[70%] w-full  py-4 px-4  text-white flex flex-col gap-2 justify-center">
                 <h1 class="text-4xl font-bold xl:text-7xl lg:text-6xl md:text-5xl">Welcome to </h1>
-                <h1 class="text-4xl font-bold xl:text-6xl lg:text-6xl md:text-5xl bg-text">PDALWAYS</h1>
+                <h1 class="text-4xl font-bold xl:text-6xl lg:text-6xl md:text-5xl bg-text"><span class="text-red-600">PDALWAYS</span></h1>
                 <!--  -->
                 <p class="my-2 text-lg lg:text-2xl sm:text-xl lg:my-6">PEDALWAY website with live updates,
                     exclusive content, race highlights, and fan interaction, keeping users engaged and excited
@@ -153,7 +153,7 @@
                     foreach ($data['ObjEtape'] as $etape) {
                         echo "<tr class='transition-colors bg-gray-50'>
                                  <td class='px-4 py-3 text-blue-600 hover:text-blue-800'>
-                                   <a href='#' class='hover:underline'> $etape->nom  </a>
+                                   <a href='".URLROOT."/Etapes/details/$etape->id' class='hover:underline'> $etape->nom  </a>
                                  </td>
                                  <td class='px-4 py-3 text-gray-600'> $etape->lieu_depart  </td>
                                  <td class='px-4 py-3 text-gray-600'>$etape->lieu_arrivee  </td>
@@ -165,6 +165,7 @@
                     }
                     ?>
                 </tbody>
+               
 
             </table>
         </div>
