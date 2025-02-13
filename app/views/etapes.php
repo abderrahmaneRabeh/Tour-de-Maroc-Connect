@@ -1,4 +1,3 @@
-<?php require_once "../app/config/config.php" ?>
 <!DOCTYPE html>
 <html lang="fr">
 
