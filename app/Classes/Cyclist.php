@@ -12,9 +12,9 @@ class Cyclist extends User
     private $historique;
 
 
-    public function __construct($id, $nom, $email, $mot_de_passe,$role, $img, $bio, $points, $date_inscription, $equipe_id, $nationalite, $historique)
+    public function __construct($id, $nom, $email, $mot_de_passe, $role, $img, $bio, $points, $date_inscription, $equipe_id, $nationalite, $historique)
     {
-        parent::__construct($id, $nom, $email, $mot_de_passe,$role, $img, $bio, $points, $date_inscription);
+        parent::__construct($id, $nom, $email, $mot_de_passe, $role, $img, $bio, $points, $date_inscription);
         $this->equipe_id = $equipe_id;
         $this->nationalite = $nationalite;
         $this->historique = $historique;

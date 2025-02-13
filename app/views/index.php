@@ -10,8 +10,8 @@
         <div class="w-[80%] mx-auto h-full flex justify-between items-center">
             <div
                 class="h-full xl:w-[50%] md:w-[60%] sm:w-[70%] w-full  py-4 px-4  text-white flex flex-col gap-2 justify-center">
-                <h1 class="xl:text-7xl lg:text-6xl md:text-5xl text-4xl font-bold">Welcome to </h1>
-                <h1 class="xl:text-6xl lg:text-6xl md:text-5xl text-4xl font-bold bg-text">PDALWAYS</h1>
+                <h1 class="text-4xl font-bold xl:text-7xl lg:text-6xl md:text-5xl">Welcome to </h1>
+                <h1 class="text-4xl font-bold xl:text-6xl lg:text-6xl md:text-5xl bg-text">PDALWAYS</h1>
                 <!--  -->
                 <p class="my-2 text-lg lg:text-2xl sm:text-xl lg:my-6">PEDALWAY website with live updates,
                     exclusive content, race highlights, and fan interaction, keeping users engaged and excited
@@ -20,7 +20,8 @@
                 <!-- Buttons -->
                 <div class="flex flex-col w-full max-w-2xl gap-4 mt-4 sm:flex-row lg:mt-8">
                     <div class="relative flex-1">
-                        <input type="text" placeholder="Search for events, races, or updates..." class="w-full px-6 py-4 text-lg text-white placeholder-gray-300 transition-all duration-300 border rounded-lg outline-none bg-white/10 border-white/20 focus:border-white backdrop-blur-sm">
+                        <input type="text" placeholder="Search for events, races, or updates..."
+                            class="w-full px-6 py-4 text-lg text-white placeholder-gray-300 transition-all duration-300 border rounded-lg outline-none bg-white/10 border-white/20 focus:border-white backdrop-blur-sm">
                         <button class="absolute -translate-y-1/2 right-4 top-1/2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                                 stroke="currentColor" class="w-6 h-6 text-white">
@@ -37,11 +38,11 @@
 
 
 
-    <div class="max-w-7xl mx-auto px-4 py-12">
-        <h1 class="text-3xl font-bold italic mb-4">BEST BIKERS</h1>
+    <div class="px-4 py-12 mx-auto max-w-7xl">
+        <h1 class="mb-4 text-3xl italic font-bold">BEST BIKERS</h1>
         <p class="text-lg font-light">- Eddy Merckx – 5 wins, dominant and versatile.</p>
         <p class="text-lg font-light">- Bernard Hinault – 5 wins, aggressive and tough.</p>
-        <p class="text-lg font-light mb-4">- Miguel Indurain – 5 consecutive wins, time trial specialist.</p>
+        <p class="mb-4 text-lg font-light">- Miguel Indurain – 5 consecutive wins, time trial specialist.</p>
 
         <!-- Product Grid -->
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -123,29 +124,29 @@
 
 
 
-    <div class="max-w-7xl mx-auto p-4">
+    <div class="p-4 mx-auto max-w-7xl">
         <!-- Table Container with horizontal scroll for mobile -->
-        <div class="overflow-x-auto shadow-sm rounded-lg">
+        <div class="overflow-x-auto rounded-lg shadow-sm">
             <table class="w-full text-sm bg-white">
                 <!-- Table Header -->
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-900">Name</th>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-900">Start Location</th>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-900">End Location</th>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-900">Distance (km)</th>
-                        <th class="px-4 py-3 text-center font-semibold text-gray-900">Start Date</th>
-                        <th class="px-4 py-3 text-right font-semibold text-gray-900">End Date</th>
-                        <th class="px-4 py-3 text-right font-semibold text-gray-900">Difficulty</th>
+                        <th class="px-4 py-3 font-semibold text-left text-gray-900">Name</th>
+                        <th class="px-4 py-3 font-semibold text-left text-gray-900">Start Location</th>
+                        <th class="px-4 py-3 font-semibold text-left text-gray-900">End Location</th>
+                        <th class="px-4 py-3 font-semibold text-left text-gray-900">Distance (km)</th>
+                        <th class="px-4 py-3 font-semibold text-center text-gray-900">Start Date</th>
+                        <th class="px-4 py-3 font-semibold text-right text-gray-900">End Date</th>
+                        <th class="px-4 py-3 font-semibold text-right text-gray-900">Difficulty</th>
                     </tr>
                 </thead>
 
                 <!-- Table Body -->
                 <tbody class="divide-y divide-gray-200">
-                 
+
                     <?php
                     foreach ($data as $etape) {
-                        echo "<tr class='bg-gray-50 transition-colors'>
+                        echo "<tr class='transition-colors bg-gray-50'>
                                  <td class='px-4 py-3 text-blue-600 hover:text-blue-800'>
                                    <a href='#' class='hover:underline'> $etape->nom  </a>
                                  </td>
@@ -153,8 +154,8 @@
                                  <td class='px-4 py-3 text-gray-600'>$etape->lieu_arrivee  </td>
                                  <td class='px-4 py-3 text-gray-600'> $etape->distance_km  </td>
                                  <td class='px-4 py-3 text-center text-gray-600'>  $etape->date_depart  </td>
-                                 <td class='px-4 py-3 text-right font-mono text-gray-600'> $etape->date_arrive  </td>
-                                 <td class='px-4 py-3 text-right font-mono text-gray-600'> $etape->difficulte  </td>
+                                 <td class='px-4 py-3 font-mono text-right text-gray-600'> $etape->date_arrive  </td>
+                                 <td class='px-4 py-3 font-mono text-right text-gray-600'> $etape->difficulte  </td>
                                </tr>";
                     }
                     ?>

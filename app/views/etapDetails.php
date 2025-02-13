@@ -1,3 +1,4 @@
+<?php require_once "../app/config/config.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -151,7 +152,7 @@
 
                 <!-- Button to view podium -->
                 <div class="mt-6 text-center">
-                    <a href="http://localhost/TourMaroc/Etapes/podium/<?= $data->id ?>"
+                    <a href="<?= URLROOT ?>/Etapes/podium/<?= $data->id ?>"
                         class="px-6 py-2 text-white transition duration-300 bg-indigo-600 rounded-full hover:bg-indigo-700">
                         Voir Podium
                     </a>
