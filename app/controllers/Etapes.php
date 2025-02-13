@@ -1,6 +1,7 @@
 <?php
 use App\Lib\Controller;
 use App\models\EtapeModel;
+use App\models\LikeModel;
 use App\models\ResultatEtapesModel;
 
 class Etapes extends Controller
@@ -13,8 +14,9 @@ class Etapes extends Controller
 
     public function details($id)
     {
+        $isAdded = LikeModel::EtapUserLiked($_SESSION['user']['id'], $id);
         $ObjEtape = EtapeModel::getEtapeById($id);
-        $this->view("etapDetails", $ObjEtape);
+        $this->view("etapDetails", ['ObjEtape' => $ObjEtape, 'isAdded' => $isAdded]);
     }
 
     public function podium($id)
