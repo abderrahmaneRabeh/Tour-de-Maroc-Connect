@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Models;
-use App\Classes\User as UserController ;
+
+use App\Classes\User as UserController;
 use App\Lib\Database;
 use Error;
 
@@ -15,19 +16,26 @@ class User
     }
     public function login($data)
     {
-        $sql = "SELECT * FROM utilisateurs WHERE email = :email";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':email', $data["email"]);
-        $stmt->execute();
-        $result = $stmt->fetch();
-        if ($result) {
-            if (password_verify($data["password"], $result['mot_de_passe'])) {
-                $this->setSession($result);
-                return true;
-            }
+        $stmt = $this->db->prepare('SELECT * FROM utilisateurs WHERE email = :email');
+        $stmt->execute(['email' => $data['email']]);
+        $user = $stmt->fetch();
+
+        if ($user && password_verify($data['password'], $user['mot_de_passe'])) {
+            $this->setSession([
+                'id' => $user['id'],
+                'nom' => $user['nom'],
+                'email' => $user['email'],
+                'role' => $user['role'],
+            ]);
+
+            $redirectUrl = ($user['role'] === 'cycliste') ? 'cyclists/dashboard' : (($user['role'] === 'admin') ? 'admin/statistiques' : '');
+
+            return ["success" => true, "redirect" => $redirectUrl];
+        } else {
+            return ["error" => "Email or password is invalid."];
         }
-        return false;
     }
+
     public function setSession($data)
     {
         $_SESSION["user"]["id"] = $data["id"];
