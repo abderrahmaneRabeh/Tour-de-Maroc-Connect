@@ -156,4 +156,14 @@ class EtapeModel
         return $stmt->fetchAll();
 
     }
+
+    public static function deleteEtape($id)
+    {
+        $db = Database::getConnection();
+        $query = "DELETE FROM etapes WHERE id = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
 }

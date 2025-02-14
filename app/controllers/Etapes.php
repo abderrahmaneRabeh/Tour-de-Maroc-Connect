@@ -52,6 +52,7 @@ class Etapes extends Controller
 
             // Redirect on success or show error on failure
             if ($isAdded) {
+                $_SESSION['success'] = 'Etape added successfully.';
                 header("Location: " . URLROOT . "/Etapes/adminEtapes");
             } else {
                 echo "Failed to add the Etape.";
@@ -143,5 +144,14 @@ class Etapes extends Controller
         mail($to, $subject, $message, implode("\r\n", $headers));
 
         header("Location: " . URLROOT . "/Etapes/details/$idEtape");
+    }
+
+    public function delete($id)
+    {
+        $isDeleted = EtapeModel::deleteEtape($id);
+        if ($isDeleted) {
+            $_SESSION['success'] = 'Etape supprimée avec succès.';
+            header("Location: " . URLROOT . "/Etapes/adminEtapes");
+        }
     }
 }

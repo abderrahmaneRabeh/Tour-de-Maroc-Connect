@@ -91,8 +91,16 @@
                         <div class="p-4 mx-auto max-w-7xl">
                             <!-- Table Container with horizontal scroll for mobile -->
                             <div class="overflow-x-auto rounded-lg shadow-sm">
+                                <?php if (isset($_SESSION['success'])): ?>
+                                    <p
+                                        class="px-4 py-2 mb-4 text-center text-green-700 bg-green-100 rounded-lg animate-pulse">
+                                        <?php echo $_SESSION['success'];
+                                        unset($_SESSION['success']); ?>
+                                    </p>
+                                <?php endif; ?>
                                 <table class="w-full text-sm bg-white">
                                     <!-- Table Header -->
+
                                     <thead class="bg-gray-50">
                                         <tr>
                                             <th class="px-4 py-3 font-semibold text-left text-gray-900">Name</th>
@@ -234,47 +242,47 @@
                         </div>
 
                         <div id="editModal"
-                            class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-                            <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                            class="fixed inset-0 z-50 hidden w-full h-full overflow-y-auto bg-gray-600 bg-opacity-50">
+                            <div class="relative p-5 mx-auto bg-white border rounded-md shadow-lg top-20 w-96">
                                 <div class="mt-3">
-                                    <h3 class="text-lg font-medium text-gray-900 mb-4">Edit Etape</h3>
+                                    <h3 class="mb-4 text-lg font-medium text-gray-900">Edit Etape</h3>
                                     <form method="POST" action="<?= URLROOT ?>/Etapes/updateEtapes" class="space-y-4">
                                         <input type="hidden" id="edit_id" name="id" />
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Name</label>
-                                            <input type="text" id="edit_nom" name="nom" required 
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                            <input type="text" id="edit_nom" name="nom" required
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Start
                                                 Location</label>
                                             <input type="text" id="edit_lieu_depart" name="lieu_depart" required
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">End Location</label>
                                             <input type="text" id="edit_lieu_arrivee" name="lieu_arrivee" required
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Distance (km)</label>
                                             <input type="number" id="edit_distance_km" name="distance_km" required
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Start Date</label>
                                             <input type="datetime-local" id="edit_date_depart" name="date_depart"
                                                 required
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">End Date</label>
                                             <input type="datetime-local" id="edit_date_arrive" name="date_arrive"
                                                 required
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
                                         <select id="edit_category_id" name="category_id" required
-                                            class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                            class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                             <option value="" disabled selected>Select a Category</option>
                                             <?php foreach ($data['category'] as $category): ?>
                                                 <option value="<?= $category['id']; ?>"><?= $category['nom']; ?></option>
@@ -283,7 +291,7 @@
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Difficulty</label>
                                             <select id="edit_difficulte" name="difficulte" required
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                                 <option value="facile">Facile</option>
                                                 <option value="Medium">Medium</option>
                                                 <option value="difficile">Difficile</option>
@@ -292,7 +300,7 @@
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Region</label>
                                             <input type="text" id="edit_region" name="region" required
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
                                         <div class="flex justify-end gap-4 mt-6">
                                             <button type="button" onclick="closeModal('editModal')"
@@ -300,7 +308,7 @@
                                                 Cancel
                                             </button>
                                             <button type="submit"
-                                                class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                                                class="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">
                                                 Update Etape
                                             </button>
                                         </div>
