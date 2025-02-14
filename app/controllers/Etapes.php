@@ -17,11 +17,11 @@ class Etapes extends Controller
     public function adminEtapes()
     {
         $ObjEtape = EtapeModel::getAllEtapes();
-     
+
 
         $categoryModel = new CategorysModel();
         $categories = $categoryModel->getAllCategories();
-        $this->view("admin/etapes", data: ['ObjEtape' => $ObjEtape,'category'=>$categories]);
+        $this->view("admin/etapes", data: ['ObjEtape' => $ObjEtape, 'category' => $categories]);
 
     }
 
@@ -58,8 +58,14 @@ class Etapes extends Controller
         echo json_encode($filteredData);
     }
 
-    public function testMail()
+    public function testMail($nomEtape, $idEtape)
     {
-        mail("rabehlife144@gmail.com", "Test", "Ceci est un test", "Etape 1 : Casablanca à safi");
+        $to = 'rabehlife144@gmail.com';
+        $subject = 'Test mail';
+        $message = "Bonjour, vous  tes actuellement en train de regarder l'étape : $nomEtape du Tour de Maroc";
+        $headers = array('Content-Type: text/html; charset=UTF-8');
+        mail($to, $subject, $message, implode("\r\n", $headers));
+
+        header("Location: " . URLROOT . "/Etapes/details/$idEtape");
     }
 }
