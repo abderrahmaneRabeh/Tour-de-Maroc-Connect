@@ -124,7 +124,7 @@
                         </button>
                     </form>
 
-                    <div class="space-y-4">
+                    <div class="space-y-4 overflow-y-auto max-h-60">
                         <?php foreach ($data['objComments'] as $comment): ?>
                             <div class="p-4 transition-all duration-300 rounded-lg bg-gray-50 hover:bg-gray-100">
                                 <div class="flex items-center justify-between mb-2">
