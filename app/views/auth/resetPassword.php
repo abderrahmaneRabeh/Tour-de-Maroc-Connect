@@ -21,24 +21,23 @@
         <form class="mt-8 space-y-6">
             <div class="rounded-md shadow-sm space-y-4">
 
-                <!-- Email -->
-                <div>
-                    <label for="email-address" class="block text-sm font-medium text-gray-700">
-                        Email address
-                    </label>
-                    <input id="email-address" name="email" type="email" autocomplete="email"
-                        class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 
-                            placeholder-neutral-200 text-gray-900 rounded-md focus:outline-none 
-                            focus:ring-primary focus:border-primary/90 focus:z-10 sm:text-sm"
-                        placeholder="john@example.com">
-                </div>
-
                 <!-- Password -->
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700">
                         Password
                     </label>
                     <input id="password" name="password" type="password" autocomplete="current-password"
+                        class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 
+                            placeholder-neutral-200 text-gray-900 rounded-md focus:outline-none 
+                            focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                        placeholder="••••••••">
+                </div>
+                <!-- verify Password -->
+                <div>
+                    <label for="verify_password" class="block text-sm font-medium text-gray-700">
+                        Verify Password
+                    </label>
+                    <input id="verify_password" name="verify_password" type="password"
                         class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 
                             placeholder-neutral-200 text-gray-900 rounded-md focus:outline-none 
                             focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
@@ -52,23 +51,11 @@
                     class="group relative w-full flex justify-center py-2 px-4 border border-transparent 
                         text-sm font-medium rounded-md text-white bg-primary/80 hover:bg-primary 
                         focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/80">
-                    Login
+                    Submit
                 </button>
             </div>
         </form>
 
-        <!-- Login Link -->
-        <div class="text-center flex items-center justify-between">
-            <p class="text-sm text-gray-600">
-                I don't have an account?
-                <a href=<?= URLROOT . '/users/register' ?> class="font-medium text-primary hover:text-primary/80">
-                    Sign up
-                </a>
-            </p>
-            <button id="forget_password" class="text-sm text-gray-600">
-                Forget password
-            </button>
-        </div>
     </div>
 </div>
 
@@ -83,17 +70,6 @@
         let isValid = true;
 
 
-        // Email validation
-        const emailInput = document.getElementById("email-address");
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailInput.value.trim()) {
-            showError(emailInput, "Email address is required.");
-            isValid = false;
-        } else if (!emailPattern.test(emailInput.value)) {
-            showError(emailInput, "Please enter a valid email address.");
-            isValid = false;
-        }
-
         // Password validation
         const passwordInput = document.getElementById("password");
         if (!passwordInput.value.trim()) {
@@ -103,6 +79,11 @@
             showError(passwordInput, "Password must be at least 6 characters.");
             isValid = false;
         }
+        const verify_password = document.getElementById("verify_password");
+        if (passwordInput.value !== verify_password.value) {
+            showError(passwordInput, "Password not match");
+            isValid = false;
+        } 
 
 
 
@@ -110,15 +91,14 @@
         if (isValid) {
             try {
                 const pathname = window.location.pathname;
-                const res = await axios.post(`${URLROOT}/users/login`, {
-                    email: emailInput.value,
+                const res = await axios.post(`${URLROOT}/users/resetPassword`, {
                     password: passwordInput.value,
                 });
                 if (res.data.success) {
                     showToast(res.data.success);
-                    setTimeout(() => {
-                        window.location.href = `${URLROOT + "/" + res.data.redirectUrl}`
-                    }, 2000)
+                    setTimeout(()=>{
+                        window.location.href = `${URLROOT}/users/login`
+                    },2500)
                 } else {
                     showToast(res.data.error, 'error');
                     console.log(res)
