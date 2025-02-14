@@ -44,4 +44,9 @@ class Etapes extends Controller
         }
         echo json_encode($filteredData);
     }
+
+    public function testMail()
+    {
+        mail("rabehlife144@gmail.com", "Test", "Ceci est un test", "Etape 1 : Casablanca à safi");
+    }
 }
