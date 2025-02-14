@@ -36,12 +36,12 @@ class SessionHelper {
     }
 }
 
-// This function should be included in config/helpers.php or some other global file
+
 function flash($name = '', $message = '', $class = 'bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative') {
     SessionHelper::flash($name, $message, $class);
 }
 
-// For error messages, you might want a different style
+// For error messages, 
 function flashError($name = '', $message = '') {
     $class = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative';
     flash($name, $message, $class);
