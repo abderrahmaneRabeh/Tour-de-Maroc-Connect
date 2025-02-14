@@ -18,7 +18,8 @@
         <!-- Header Section -->
         <div class="flex items-center justify-between mb-8">
             <h1 class="text-3xl font-bold text-gray-800"><?= $data['ObjEtape']->nom ?></h1>
-            <button id="showSignalementForm" class="px-6 py-2 text-white transition-all duration-300 bg-red-500 rounded-full hover:bg-red-600 hover:shadow-lg">
+            <button id="showSignalementForm"
+                class="px-6 py-2 text-white transition-all duration-300 bg-red-500 rounded-full hover:bg-red-600 hover:shadow-lg">
                 <i class="mr-2 fas fa-flag"></i>Signaler l'Étape
             </button>
         </div>
@@ -37,7 +38,8 @@
                                 </div>
                                 <div>
                                     <p class="text-sm text-gray-500">Départ</p>
-                                    <p class="text-lg font-semibold text-gray-800"><?= $data['ObjEtape']->lieu_depart ?></p>
+                                    <p class="text-lg font-semibold text-gray-800"><?= $data['ObjEtape']->lieu_depart ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -48,7 +50,9 @@
                                 </div>
                                 <div>
                                     <p class="text-sm text-gray-500">Arrivée</p>
-                                    <p class="text-lg font-semibold text-gray-800"><?= $data['ObjEtape']->lieu_arrivee ?></p>
+                                    <p class="text-lg font-semibold text-gray-800">
+                                        <?= $data['ObjEtape']->lieu_arrivee ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -79,20 +83,20 @@
                 <!-- Actions Card -->
                 <div class="flex gap-4 p-6 transition-all duration-300 bg-white shadow-sm rounded-xl hover:shadow-md">
                     <?php if (isset($_SESSION['user']['id'])): ?>
-                            <?php if ($data['isAdded']): ?>
-                                    <a href="<?= URLROOT ?>/Like/remove/<?= $_SESSION['user']['id'] ?>/<?= $data['ObjEtape']->id ?>" 
-                                       class="flex-1 px-6 py-3 text-center text-white transition-all duration-300 bg-red-500 rounded-lg hover:bg-red-600">
-                                        <i class="mr-2 fas fa-heart-broken"></i>Retirer des favoris
-                                    </a>
-                            <?php else: ?>
-                                    <a href="<?= URLROOT ?>/Like/add/<?= $_SESSION['user']['id'] ?>/<?= $data['ObjEtape']->id ?>"
-                                       class="flex-1 px-6 py-3 text-center text-white transition-all duration-300 bg-green-500 rounded-lg hover:bg-green-600">
-                                        <i class="mr-2 far fa-heart"></i>Ajouter aux favoris
-                                    </a>
-                            <?php endif; ?>
+                        <?php if ($data['isAdded']): ?>
+                            <a href="<?= URLROOT ?>/Like/remove/<?= $_SESSION['user']['id'] ?>/<?= $data['ObjEtape']->id ?>"
+                                class="flex-1 px-6 py-3 text-center text-white transition-all duration-300 bg-red-500 rounded-lg hover:bg-red-600">
+                                <i class="mr-2 fas fa-heart-broken"></i>Retirer des favoris
+                            </a>
+                        <?php else: ?>
+                            <a href="<?= URLROOT ?>/Like/add/<?= $_SESSION['user']['id'] ?>/<?= $data['ObjEtape']->id ?>"
+                                class="flex-1 px-6 py-3 text-center text-white transition-all duration-300 bg-green-500 rounded-lg hover:bg-green-600">
+                                <i class="mr-2 far fa-heart"></i>Ajouter aux favoris
+                            </a>
+                        <?php endif; ?>
                     <?php endif; ?>
                     <a href="<?= URLROOT ?>/Etapes/podium/<?= $data['ObjEtape']->id ?>"
-                       class="flex-1 px-6 py-3 text-center text-white transition-all duration-300 bg-indigo-500 rounded-lg hover:bg-indigo-600">
+                        class="flex-1 px-6 py-3 text-center text-white transition-all duration-300 bg-indigo-500 rounded-lg hover:bg-indigo-600">
                         <i class="mr-2 fas fa-trophy"></i>Voir le Podium
                     </a>
                 </div>
@@ -104,28 +108,28 @@
                     <h2 class="mb-4 text-xl font-semibold text-gray-800">Commentaires</h2>
                     <form action="<?= URLROOT ?>/Comment/add" method="post" class="mb-6">
                         <input type="hidden" name="etap_id" value="<?= $data['ObjEtape']->id ?>">
-                        <textarea name="content" rows="4" 
-                                class="w-full p-3 mb-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:outline-none"
-                                placeholder="Votre commentaire..."></textarea>
-                        <button type="submit" 
-                                class="w-full px-4 py-2 text-white transition-all duration-300 bg-indigo-500 rounded-lg hover:bg-indigo-600">
+                        <textarea name="content" rows="4"
+                            class="w-full p-3 mb-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:outline-none"
+                            placeholder="Votre commentaire..."></textarea>
+                        <button type="submit"
+                            class="w-full px-4 py-2 text-white transition-all duration-300 bg-indigo-500 rounded-lg hover:bg-indigo-600">
                             <i class="mr-2 fas fa-comment"></i>Commenter
                         </button>
                     </form>
 
                     <div class="space-y-4">
                         <?php foreach ($data['objComments'] as $comment): ?>
-                                <div class="p-4 transition-all duration-300 rounded-lg bg-gray-50 hover:bg-gray-100">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <p class="text-sm font-medium text-gray-600"><?= $comment->nom ?></p>
-                                        <p class="text-xs text-gray-400"><?= $comment->date_creation ?></p>
-                                    </div>
-                                    <p class="text-gray-700"><?= $comment->contenu ?></p>
-                                    <a href="<?= URLROOT ?>/Comment/delete/<?= $comment->id ?>/<?= $data['ObjEtape']->id ?>" 
-                                       class="inline-block mt-2 text-sm text-red-500 hover:text-red-600">
-                                        <i class="mr-1 fas fa-trash"></i>Supprimer
-                                    </a>
+                            <div class="p-4 transition-all duration-300 rounded-lg bg-gray-50 hover:bg-gray-100">
+                                <div class="flex items-center justify-between mb-2">
+                                    <p class="text-sm font-medium text-gray-600"><?= $comment->nom ?></p>
+                                    <p class="text-xs text-gray-400"><?= $comment->date_creation ?></p>
                                 </div>
+                                <p class="text-gray-700"><?= $comment->contenu ?></p>
+                                <a href="<?= URLROOT ?>/Comment/delete/<?= $comment->id ?>/<?= $data['ObjEtape']->id ?>"
+                                    class="inline-block mt-2 text-sm text-red-500 hover:text-red-600">
+                                    <i class="mr-1 fas fa-trash"></i>Supprimer
+                                </a>
+                            </div>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -145,15 +149,18 @@
                 </div>
                 <form action="<?= URLROOT ?>/Signalement/add" method="post">
                     <input type="hidden" name="etap_id" value="<?= $data['ObjEtape']->id ?>">
-                    <select name="type" required class="w-full p-3 mb-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:outline-none">
+                    <select name="type" required
+                        class="w-full p-3 mb-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:outline-none">
                         <option value="" disabled selected>Choisir un motif</option>
-                        <option value="1">Erreur de parcours</option>
-                        <option value="2">Erreur de difficulté</option>
-                        <option value="3">Erreur de distance</option>
-                        <option value="4">Erreur de départ/arrivée</option>
-                        <option value="5">Autre</option>
+                        <option value="Le parcours de l'étape est erroné">Le parcours de l'étape est erroné</option>
+                        <option value="La difficulté de l'étape est mal évaluée">La difficulté de l'étape est mal
+                            évaluée</option>
+                        <option value="La distance de l'étape est inexacte">La distance de l'étape est inexacte</option>
+                        <option value="Les informations de départ et d'arrivée sont incorrectes">Les informations de
+                            départ et d'arrivée sont incorrectes</option>
                     </select>
-                    <button type="submit" class="w-full px-4 py-2 text-white transition-all duration-300 bg-red-500 rounded-lg hover:bg-red-600">
+                    <button type="submit"
+                        class="w-full px-4 py-2 text-white transition-all duration-300 bg-red-500 rounded-lg hover:bg-red-600">
                         <i class="mr-2 fas fa-exclamation-triangle"></i>Envoyer le signalement
                     </button>
                 </form>
@@ -186,4 +193,5 @@
         });
     </script>
 </body>
+
 </html>
