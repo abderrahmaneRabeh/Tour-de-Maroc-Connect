@@ -15,4 +15,15 @@ class Like extends Controller
         }
     }
 
+    public function remove($fan_id, $etap_id)
+    {
+        $isRemoved = LikeModel::SupprimerLike($fan_id, $etap_id);
+
+        if ($isRemoved) {
+            header("Location: " . URLROOT . "/Etapes/details/$etap_id");
+        } else {
+            echo "Failed to remove a like.";
+        }
+    }
+
 }
