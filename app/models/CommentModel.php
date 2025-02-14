@@ -30,7 +30,8 @@ class CommentModel
                 $comment['contenu'],
                 $comment['fan_id'],
                 $comment['etape_id'],
-                $comment['date_creation']
+                $comment['date_creation'],
+                $comment['is_valid']
             );
             $commentObject->nom = $comment['nom'];
             $commentsObjects[] = $commentObject;

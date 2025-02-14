@@ -8,4 +8,9 @@ class Admin extends Controller
     {
         $this->view("admin/statistiques");
     }
+
+    public function Commentaires()
+    {
+        $this->view("admin/Commentaire");
+    }
 }

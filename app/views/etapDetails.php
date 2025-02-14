@@ -135,17 +135,29 @@
 
                     <div class="space-y-4 overflow-y-auto max-h-60">
                         <?php foreach ($data['objComments'] as $comment): ?>
-                            <div class="p-4 transition-all duration-300 rounded-lg bg-gray-50 hover:bg-gray-100">
-                                <div class="flex items-center justify-between mb-2">
-                                    <p class="text-sm font-medium text-gray-600"><?= $comment->nom ?></p>
-                                    <p class="text-xs text-gray-400"><?= $comment->date_creation ?></p>
+                            <?php if ($comment->is_valid): ?>
+                                <div class="p-4 transition-all duration-300 rounded-lg bg-gray-50 hover:bg-gray-100">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <p class="text-sm font-medium text-gray-600"><?= $comment->nom ?></p>
+                                        <p class="text-xs text-gray-400"><?= $comment->date_creation ?></p>
+                                    </div>
+                                    <p class="text-gray-700"><?= $comment->contenu ?></p>
+                                    <a href="<?= URLROOT ?>/Comment/delete/<?= $comment->id ?>/<?= $data['ObjEtape']->id ?>"
+                                        class="inline-block mt-2 text-sm text-red-500 hover:text-red-600">
+                                        <i class="mr-1 fas fa-trash"></i>Supprimer
+                                    </a>
                                 </div>
-                                <p class="text-gray-700"><?= $comment->contenu ?></p>
-                                <a href="<?= URLROOT ?>/Comment/delete/<?= $comment->id ?>/<?= $data['ObjEtape']->id ?>"
-                                    class="inline-block mt-2 text-sm text-red-500 hover:text-red-600">
-                                    <i class="mr-1 fas fa-trash"></i>Supprimer
-                                </a>
-                            </div>
+                            <?php else: ?>
+                                <div class="p-4 transition-all duration-300 rounded-lg bg-gray-50 hover:bg-gray-100">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <p class="text-sm font-medium text-gray-600"><?= $comment->nom ?> (ID:
+                                            <?= $comment->id ?>)</p>
+                                    </div>
+                                    <p class="text-xs text-gray-400">Votre message va afficher après validation de l'admin.
+                                    </p>
+                                </div>
+                            <?php endif; ?>
+
                         <?php endforeach; ?>
                     </div>
                 </div>

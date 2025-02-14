@@ -57,6 +57,7 @@
                             </svg>
                             Commentaire
                         </a>
+
                     </nav>
                 </div>
             </div>
@@ -80,22 +81,7 @@
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
                 <div class="container px-6 py-8 mx-auto">
                     <div class="p-6 bg-white rounded-lg shadow-lg">
-                        <h1 class="mb-6 text-2xl font-semibold text-gray-800">Categories</h1>
-
-                        <!-- Add Category Form -->
-                        <div class="p-6 mb-8 rounded-lg bg-gray-50">
-                            <h2 class="mb-4 text-xl font-medium text-gray-700">Add New Category</h2>
-                            <form action="<?= URLROOT ?>/Categorys/add" method="POST" class="flex gap-4">
-                                <input type="text" name="nom" id="nom" placeholder="Category Name"
-                                    class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                    required />
-                                <button type="submit"
-                                    class="px-6 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                    Add Category
-                                </button>
-                            </form>
-                        </div>
-
+                        <h1 class="mb-6 text-2xl font-semibold text-gray-800">Commentaires</h1>
                         <!-- Categories List -->
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
@@ -113,27 +99,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    <?php foreach ($data as $category): ?>
-                                        <tr>
-                                            <td class="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">
-                                                <?php echo $category['id']; ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">
-                                                <?php echo $category['nom']; ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-sm whitespace-nowrap">
-                                                <button
-                                                    onclick="openEditModal('<?php echo $category['id']; ?>', '<?php echo $category['nom']; ?>')"
-                                                    class="text-indigo-600 hover:text-indigo-900">
-                                                    Edit
-                                                </button>
-                                                <!-- Delete Button -->
-                                                <a href="<?php echo URLROOT . '/Categorys/deleteCategory/' . $category['id']; ?>"
-                                                    class="ml-8 text-red-500"
-                                                    onclick="return confirm('Are you sure you want to delete this category?')">Delete</a>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
+
                                 </tbody>
                             </table>
                         </div>
