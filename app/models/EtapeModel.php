@@ -5,6 +5,8 @@ namespace App\models;
 
 use App\Lib\Database;
 use App\Classes\Etape;
+
+use PDO;
 class EtapeModel
 {
     private $db;
@@ -13,6 +15,31 @@ class EtapeModel
     {
         $this->db = Database::getConnection();
     }
+
+
+    public function addEtape($nom, $lieu_depart, $lieu_arrivee, $distance_km, $date_depart, $date_arrive, $categorie_id, $difficulte, $region): bool
+    {
+
+        $query = "INSERT INTO etapes (nom, lieu_depart, lieu_arrivee, distance_km, date_depart, date_arrive, categorie_id, difficulte, region) 
+                  VALUES (:nom, :lieu_depart, :lieu_arrivee, :distance_km, :date_depart, :date_arrive, :categorie_id, :difficulte, :region)";
+
+        $stmt = $this->db->prepare($query);
+
+        $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
+        $stmt->bindParam(':lieu_depart', $lieu_depart, PDO::PARAM_STR);
+        $stmt->bindParam(':lieu_arrivee', $lieu_arrivee, PDO::PARAM_STR);
+        $stmt->bindParam(':distance_km', $distance_km, PDO::PARAM_INT);
+        $stmt->bindParam(':date_depart', $date_depart, PDO::PARAM_STR);
+        $stmt->bindParam(':date_arrive', $date_arrive, PDO::PARAM_STR);
+        $stmt->bindParam(':categorie_id', $categorie_id, PDO::PARAM_INT);
+        $stmt->bindParam(':difficulte', $difficulte, PDO::PARAM_STR);
+        $stmt->bindParam(':region', $region, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->rowCount() > 0;
+    }
+
 
     public static function getAllEtapes()
     {

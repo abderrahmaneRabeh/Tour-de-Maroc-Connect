@@ -97,6 +97,7 @@
                                             </th>
                                             <th class="px-4 py-3 font-semibold text-right text-gray-900">End Date</th>
                                             <th class="px-4 py-3 font-semibold text-right text-gray-900">Difficulty</th>
+                                            <th class="px-4 py-3 font-semibold text-right text-gray-900">Region</th>
                                             <th class="px-4 py-3 font-semibold text-center text-gray-900">Actions</th>
                                         </tr>
                                     </thead>
@@ -117,6 +118,8 @@
                                                 <td class="px-4 py-3 text-right text-gray-600"><?= $etape->date_arrive ?>
                                                 </td>
                                                 <td class="px-4 py-3 text-right text-gray-600"><?= $etape->difficulte ?>
+                                                </td>
+                                                <td class="px-4 py-3 text-right text-gray-600"><?= $etape->region ?>
                                                 </td>
                                                 <td class="px-4 py-3 text-center space-x-2">
                                                     <button
@@ -153,7 +156,7 @@
                             <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
                                 <div class="mt-3">
                                     <h3 class="text-lg font-medium text-gray-900 mb-4">Add New Etape</h3>
-                                    <form method="POST" action="<?= URLROOT ?>/Etapes/add" class="space-y-4">
+                                    <form method="POST" action="<?= URLROOT ?>/Etapes/addEtapes" class="space-y-4">
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Name</label>
                                             <input type="text" name="nom" required
@@ -196,10 +199,15 @@
                                             <label class="block text-sm font-medium text-gray-700">Difficulty</label>
                                             <select name="difficulte" required
                                                 class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                                <option value="Easy">Easy</option>
+                                                <option value="facile">facile</option>
                                                 <option value="Medium">Medium</option>
-                                                <option value="Hard">Hard</option>
+                                                <option value="diffucile">diffucile</option>
                                             </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">Region</label>
+                                            <input type="text" name="region" required
+                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
                                         <div class="flex justify-end gap-4 mt-6">
                                             <button type="button" onclick="closeModal('addModal')"
