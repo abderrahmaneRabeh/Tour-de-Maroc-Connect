@@ -184,7 +184,32 @@
                 </div>
             </div>
         </div>
+
+        <div class="max-w-2xl mx-auto">
+            <form action="<?= URLROOT ?>/Comment/add" method="post" class="mt-6 space-y-4">
+                <input type="hidden" name="etap_id" value="<?= $data['ObjEtape']->id ?>">
+                <textarea name="content" id="content" rows="4" placeholder="Ajouter un commentaire..."
+                    class="w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200"></textarea>
+                <button type="submit"
+                    class="px-4 py-2 text-white transition duration-300 bg-indigo-600 rounded-full hover:bg-indigo-700">Ajouter
+                    un commentaire</button>
+            </form>
+            <div class="mt-6 space-y-4">
+                <?php foreach ($data['objComments'] as $comment): ?>
+                    <div class="px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm">
+                        <p class="text-sm text-gray-500">Posté par <b><?= $comment->nom ?></b> le
+                            <?= $comment->date_creation ?>
+                        </p>
+                        <p class="text-lg font-semibold text-gray-800"><?= $comment->contenu ?></p>
+                        <a href="<?= URLROOT ?>/Comment/delete/<?= $comment->id ?>/<?= $data['ObjEtape']->id ?>"
+                            class="text-sm text-red-600 hover:underline">Supprimer</a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
     </div>
+
 
     <script>
         // Add entrance animation to all cards
