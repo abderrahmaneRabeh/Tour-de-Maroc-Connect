@@ -127,7 +127,6 @@ class Cyclists extends Controller
     }
     public function updateProfileImage() {
         $this->valideRoleUser('cycliste');
-        
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (empty($_FILES['profile_image']['name'])) {
                 $_SESSION['error'] = "Aucun fichier n'a été sélectionné";
