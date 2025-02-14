@@ -1,5 +1,8 @@
 <?php
+
 namespace App\Lib;
+
+
 class Core
 {
     protected $controller = "Pages";

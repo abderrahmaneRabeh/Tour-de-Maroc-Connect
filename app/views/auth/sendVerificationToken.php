@@ -3,17 +3,17 @@
         <!-- Header -->
         <input type="hidden" id="URLROOT" value='<?= URLROOT ?>'>
         <div>
-            <button class="text-white bg-black  p-2 px-4 rounded-lg">
-                <a href=<?= URLROOT ?> class="">
+            <button onclick="window.back()" class="text-white bg-black  p-2 px-4 rounded-lg">
+                <a class="">
                     <i class="fas fa-arrow-left me-1"></i>
                     Go back
                 </a>
             </button>
             <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                Login to your account
+                Email verification
             </h2>
             <p class="mt-2 text-center text-sm text-gray-600">
-                Welcom again to Toure de Maroc
+                We will send you an email token
             </p>
         </div>
 
@@ -32,18 +32,6 @@
                             focus:ring-primary focus:border-primary/90 focus:z-10 sm:text-sm"
                         placeholder="john@example.com">
                 </div>
-
-                <!-- Password -->
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700">
-                        Password
-                    </label>
-                    <input id="password" name="password" type="password" autocomplete="current-password"
-                        class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 
-                            placeholder-neutral-200 text-gray-900 rounded-md focus:outline-none 
-                            focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
-                        placeholder="••••••••">
-                </div>
             </div>
 
             <!-- Submit Button -->
@@ -52,23 +40,11 @@
                     class="group relative w-full flex justify-center py-2 px-4 border border-transparent 
                         text-sm font-medium rounded-md text-white bg-primary/80 hover:bg-primary 
                         focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/80">
-                    Login
+                    Submit
                 </button>
             </div>
         </form>
 
-        <!-- Login Link -->
-        <div class="text-center flex items-center justify-between">
-            <p class="text-sm text-gray-600">
-                I don't have an account?
-                <a href=<?= URLROOT . '/users/register' ?> class="font-medium text-primary hover:text-primary/80">
-                    Sign up
-                </a>
-            </p>
-            <button id="forget_password" class="text-sm text-gray-600">
-                Forget password
-            </button>
-        </div>
     </div>
 </div>
 
@@ -94,42 +70,28 @@
             isValid = false;
         }
 
-        // Password validation
-        const passwordInput = document.getElementById("password");
-        if (!passwordInput.value.trim()) {
-            showError(passwordInput, "Password is required.");
-            isValid = false;
-        } else if (passwordInput.value.length < 6) {
-            showError(passwordInput, "Password must be at least 6 characters.");
-            isValid = false;
-        }
-
 
 
         // If the form is valid, submit the form (replace this with an actual form submission logic)
         if (isValid) {
             try {
-                const pathname = window.location.pathname;
-                const res = await axios.post(`${URLROOT}/users/login`, {
+                const res = await axios.post(`${URLROOT}/users/sendVerificationToken`, {
                     email: emailInput.value,
-                    password: passwordInput.value,
                 });
-                if (res.data.success) {
-                    showToast(res.data.success);
-                    window.location.href = URLROOT
+                if (res.data.redirect) {
+                    window.location.href = `${URLROOT}/users/${res.data.redirect}`
                 } else {
                     showToast(res.data.error, 'error');
-                    console.log(res)
                 }
             } catch (error) {
-                console.error(error);
+                showToast(error.response.data.error,'error')
             }
         }
     });
 
-    const forgetPass = document.getElementById("forget_password");
+    const forgetPass = document.getElementById("forget_password")
     forgetPass.addEventListener("click", async () => {
-        window.location.href = `${URLROOT}/users/sendVerificationToken`
+        const res = await axios.post(`${URLROOT}/users/sendVerificationToken`);
     })
 
     // Function to show error messages
