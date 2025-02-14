@@ -49,8 +49,8 @@
 
         <!-- Auth Buttons -->
         <div class="hidden lg:flex lg:items-center lg:space-x-3">
-            <a class="py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold rounded-xl transition duration-200" href="#">Sign In</a>
-            <a class="py-2 px-6 bg-red-600 hover:bg-white hover:text-red-600 text-sm text-white font-bold rounded-xl transition duration-200" href="#">Sign up</a>
+            <a class="py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold rounded-xl transition duration-200" href="<?= URLROOT . '/users/login' ?>">Sign In</a>
+            <a class="py-2 px-6 bg-red-600 hover:bg-white hover:text-red-600 text-sm text-white font-bold rounded-xl transition duration-200" href="<?= URLROOT . '/users/register' ?>">Sign up</a>
         </div>
     </nav>
 
