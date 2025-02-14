@@ -29,10 +29,28 @@ class CategorysModel
 
     public function getAllCategories(): array
     {
-        $query = "SELECT * FROM categories";
+        $query = "SELECT * FROM categories ORDER BY id ASC";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function updateCategory($id_category, $nom_category): bool
+    {
+     
+        if (empty($id_category) || empty($nom_category)) {
+            return false; 
+        }
+
+        $query = "UPDATE categories SET nom = :nom WHERE id = :id ";
+    
+        $stmt = $this->db->prepare($query);
+    
+        $stmt->bindParam(':nom', $nom_category, \PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id_category, \PDO::PARAM_INT);
+    
+        $stmt->execute();
+        return $stmt->rowCount() > 0;
     }
 }
