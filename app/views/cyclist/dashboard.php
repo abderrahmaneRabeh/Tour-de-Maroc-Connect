@@ -1,151 +1,97 @@
-
-<body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm px-8 py-4">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <i class="fas fa-bicycle text-3xl text-blue-600"></i>
-                <h1 class="text-2xl font-bold">Tour du Maroc</h1>
-            </div>
-            <div class="flex items-center space-x-4">
-                <i class="fas fa-cog text-xl text-gray-600 cursor-pointer"></i>
-                <i class="fas fa-sign-out-alt text-xl text-gray-600 cursor-pointer"></i>
+<body class="bg-gray-100">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 bg-gray-800">
+                <div class="flex items-center justify-center h-16 bg-gray-900">
+                    <i class="fas fa-bicycle text-2xl text-white mr-2"></i>
+                    <span class="text-xl font-semibold text-white">Tour du Maroc</span>
+                </div>
+                <div class="flex flex-col flex-1 overflow-y-auto">
+                    <nav class="flex-1 px-2 py-4 space-y-2">
+                        <a href="<?= URLROOT . '/cyclists/dashboard' ?>" class="flex items-center px-4 py-3 text-white bg-gray-700 rounded-lg">
+                            <i class="fas fa-chart-line w-6 h-6 mr-3"></i>
+                            Vue d'ensemble
+                        </a>
+                        <a href="<?= URLROOT . '/cyclists/profile' ?>" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-700 hover:text-white transition-colors">
+                            <i class="fas fa-user w-6 h-6 mr-3"></i>
+                            Profil
+                        </a>
+                        <a href="<?= URLROOT . '/cyclists/stats' ?>" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-700 hover:text-white transition-colors">
+                            <i class="fas fa-trophy w-6 h-6 mr-3"></i>
+                            Performance
+                        </a>
+                    </nav>
+                </div>
             </div>
         </div>
-    </nav>
 
-    <div class="flex">
-        <!-- Sidebar -->
-        <aside class="w-64 min-h-screen bg-white shadow-sm">
-            <nav class="p-4">
-                <div class="space-y-2">
-                    <a href="index.php" class="w-full flex items-center space-x-3 px-4 py-2 rounded-lg bg-blue-50 text-blue-600">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Vue d'ensemble</span>
-                    </a>
-                    <a href="indexx.php" class="w-full flex items-center space-x-3 px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50">
-                        <i class="fas fa-user"></i>
-                        <span>Profil</span>
-                    </a>
-                    <a href="tt.php" class="w-full flex items-center space-x-3 px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50">
-                        <i class="fas fa-trophy"></i>
-                        <span>Performance</span>
-                    </a>
+        <!-- Main Content -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Top Navigation -->
+            <header class="flex items-center justify-between px-6 py-4 bg-white border-b">
+                <div class="flex items-center md:hidden">
+                    <button class="text-gray-700 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
                 </div>
-            </nav>
-        </aside>
-
-        <!-- Contenu Principal -->
-        <main class="flex-1 p-8">
-            <!-- Section Vue d'ensemble -->
-            <div id="overview" class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Carte Points -->
-                    <div class="bg-white p-6 rounded-lg shadow-sm">
-                        <h3 class="text-lg font-semibold text-gray-700">Points Totaux</h3>
-                        <p class="text-3xl font-bold mt-2">95</p>
-                    </div>
-                    <!-- Carte Classement -->
-                    <div class="bg-white p-6 rounded-lg shadow-sm">
-                        <h3 class="text-lg font-semibold text-gray-700">Classement Actuel</h3>
-                        <p class="text-3xl font-bold mt-2">#3</p>
-                    </div>
-                    <!-- Carte Vitesse -->
-                    <div class="bg-white p-6 rounded-lg shadow-sm">
-                        <h3 class="text-lg font-semibold text-gray-700">Vitesse Moyenne</h3>
-                        <p class="text-3xl font-bold mt-2">42.1 km/h</p>
-                    </div>
-                </div>
-
-                <!-- Graphique de Performance -->
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4">Tendances de Performance</h3>
-                    <div class="h-80">
-                        <canvas id="performanceChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section Profil -->
-            <div id="profile" class="hidden bg-white rounded-lg shadow-sm">
-                <div class="p-6">
-                    <h2 class="text-xl font-semibold mb-6">Informations Personnelles</h2>
-                    <div class="space-y-6">
-                        <div class="flex items-center space-x-6">
-                            <div class="h-24 w-24 rounded-full bg-gray-200 flex items-center justify-center">
-                                <i class="fas fa-user text-4xl text-gray-400"></i>
+                <span class="text-gray-700">Dashboard</span>
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-cog text-gray-600 cursor-pointer"></i>
+                    <i class="fas fa-sign-out-alt text-gray-600 cursor-pointer"></i>
+                    <div class="relative">
+                        <button class="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none">
+                            <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                <i class="fas fa-user text-gray-400"></i>
                             </div>
-                            <div>
-                                <h3 class="text-xl font-semibold">Mohammed Alami</h3>
-                                <p class="text-gray-600">Team Atlas Riders</p>
-                            </div>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+                <div class="container px-6 py-8 mx-auto">
+                    <h3 class="text-3xl font-medium text-gray-700 mb-6">Vue d'ensemble</h3>
+                    
+                    <!-- Cards Overview -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <!-- Card Points -->
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <h3 class="text-lg font-semibold text-gray-700">Points Totaux</h3>
+                            <p class="text-3xl font-bold mt-2"><?= htmlspecialchars($data['stats']['points']) ?></p>
                         </div>
-                        <div class="grid grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Nationalité</label>
-                                <p class="mt-1">Marocain</p>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Expérience</label>
-                                <p class="mt-1">5 ans</p>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Email</label>
-                                <p class="mt-1">mohammed.alami@example.com</p>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Équipe</label>
-                                <p class="mt-1">Atlas Riders</p>
-                            </div>
+                        <!-- Card Ranking -->
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <h3 class="text-lg font-semibold text-gray-700">Classement Actuel</h3>
+                            <p class="text-3xl font-bold mt-2">#<?= htmlspecialchars($data['stats']['ranking']) ?></p>
+                        </div>
+                        <!-- Card Speed -->
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <h3 class="text-lg font-semibold text-gray-700">Vitesse Moyenne</h3>
+                            <p class="text-3xl font-bold mt-2"><?= htmlspecialchars($data['stats']['averageSpeed']) ?> km/h</p>
+                        </div>
+                    </div>
+
+                    <!-- Performance Chart -->
+                    <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-4">Tendances de Performance</h3>
+                        <div class="h-80">
+                            <canvas id="performanceChart"></canvas>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Section Performance -->
-            <div id="performance" class="hidden">
-                <div class="bg-white rounded-lg shadow-sm">
-                    <div class="p-6">
-                        <h2 class="text-xl font-semibold mb-6">Résultats par Étape</h2>
-                        <div class="overflow-x-auto">
-                            <table class="w-full">
-                                <thead>
-                                    <tr class="border-b">
-                                        <th class="px-4 py-2 text-left">Étape</th>
-                                        <th class="px-4 py-2 text-left">Vitesse (km/h)</th>
-                                        <th class="px-4 py-2 text-left">Points</th>
-                                        <th class="px-4 py-2 text-left">Classement</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-b">
-                                        <td class="px-4 py-2">Étape 1</td>
-                                        <td class="px-4 py-2">42.5</td>
-                                        <td class="px-4 py-2">25</td>
-                                        <td class="px-4 py-2">#3</td>
-                                    </tr>
-                                    <tr class="border-b">
-                                        <td class="px-4 py-2">Étape 2</td>
-                                        <td class="px-4 py-2">40.2</td>
-                                        <td class="px-4 py-2">18</td>
-                                        <td class="px-4 py-2">#5</td>
-                                    </tr>
-                                    <tr class="border-b">
-                                        <td class="px-4 py-2">Étape 3</td>
-                                        <td class="px-4 py-2">44.1</td>
-                                        <td class="px-4 py-2">30</td>
-                                        <td class="px-4 py-2">#1</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
 
     <script>
+        // Toggle mobile menu
+        document.querySelector('button').addEventListener('click', () => {
+            const sidebar = document.querySelector('.md\\:flex');
+            sidebar.classList.toggle('hidden');
+        });
+    
         // Configuration du graphique
         const ctx = document.getElementById('performanceChart').getContext('2d');
         new Chart(ctx, {
@@ -164,29 +110,5 @@
                 maintainAspectRatio: false
             }
         });
-
-        // Gestion de la navigation
-        document.querySelectorAll('aside a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                // Retirer la classe active de tous les liens
-                document.querySelectorAll('aside a').forEach(l => {
-                    l.classList.remove('bg-blue-50', 'text-blue-600');
-                    l.classList.add('text-gray-600');
-                });
-                // Ajouter la classe active au lien cliqué
-                link.classList.remove('text-gray-600');
-                link.classList.add('bg-blue-50', 'text-blue-600');
-                
-                // Masquer toutes les sections
-                document.querySelectorAll('main > div').forEach(section => {
-                    section.classList.add('hidden');
-                });
-                // Afficher la section correspondante
-                const sectionId = link.getAttribute('href').substring(1);
-                document.getElementById(sectionId).classList.remove('hidden');
-            });
-        });
     </script>
 </body>
-</html>

@@ -1,12 +1,20 @@
 {
-    "name": "taha/education-platform",
-    "description": "education platform",
+    "name": "ycode/tour-de-maroc-connect",
     "autoload": {
         "psr-4": {
             "App\\": "app/"
         }
     },
+
     "require": {
         "phpmailer/phpmailer": "^6.9"
     }
 }
+    "authors": [
+        {
+            "name": "asma828",
+            "email": "asmalachhab66@gmail.com"
+        }
+    ],
+}
+

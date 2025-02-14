@@ -1,14 +1,18 @@
 <?php
 
 use App\Lib\Controller;
+use App\Helpers\FileUpload;
 use App\Classes\Cyclist as CyclistClass ;
+use App\Classes\historique;
 class Cyclists extends Controller
 {
     private $cyclistModel;
+    private $historiqueModel;
 
     public function __construct()
     {
         $this->cyclistModel = $this->modal('Cyclist');
+        $this->historiqueModel = $this->modal('Historique');
     }
 
     public function dashboard()
@@ -16,7 +20,7 @@ class Cyclists extends Controller
         $this->view("cyclist/dashboard");
     }
 
-    public function profile()
+    public function profiles()
     {
         $this->view("cyclist/profile");
     }
@@ -26,25 +30,6 @@ class Cyclists extends Controller
         $this->view("cyclist/stats");
     }
 
-    public function ajaxSearch()
-    {
-        header('Content-Type: application/json');
-
-        $searchTerm = isset($_GET['term']) ? trim($_GET['term']) : '';
-
-        if (!empty($searchTerm)) {
-            $cyclists = $this->cyclistModel->searchCyclists($searchTerm);
-        } else {
-            $cyclists = [];
-        }
-
-        echo json_encode([
-            'success' => true,
-            'searchTerm' => $searchTerm,
-            'cyclists' => $cyclists
-        ]);
-        exit;
-    }
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -79,4 +64,109 @@ class Cyclists extends Controller
             }
         }
     }
+
+    public function profile() {
+        // Check if user is logged in and is a cyclist
+        $this->valideRoleUser('cycliste');
+        
+        $cyclistId = $_SESSION['user']['id'];
+        $cyclist = $this->cyclistModel->getCyclistById($cyclistId);
+        $performances = $this->cyclistModel->getPerformances($cyclistId);
+        $teams = $this->cyclistModel->getTeams();
+        
+        // Get historique for this specific cyclist
+        $historiques = $this->historiqueModel->getHistoriqueByCyclisteId($cyclistId);
+        
+        $data = [
+            'cyclist' => $cyclist,
+            'performances' => $performances,
+            'teams' => $teams,
+            'historiques' => $historiques
+        ];
+        
+        $this->view('cyclist/profile', $data);
+    }
+    
+    public function updateProfile() {
+        // Check if user is logged in and is a cyclist
+        $this->valideRoleUser('cycliste');
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+           
+            
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
+            $data = [
+                'id' => $_SESSION['user']['id'],
+                'nom' => trim($_POST['nom']),
+                'email' => trim($_POST['email']),
+                'nationalite' => trim($_POST['nationalite']),
+                'bio' => trim($_POST['bio']),
+                'equipe_id' => !empty($_POST['equipe_id']) ? (int)$_POST['equipe_id'] : null
+            ];
+            
+            // Validate email
+            if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+                $_SESSION['error'] = "Email invalid";
+                redirect('cyclists/profile');
+                exit();
+            }
+            
+            // Update profile information
+            if ($this->cyclistModel->updatePersonalInfo($data)) {
+                $_SESSION['success'] = "Profil mis à jour avec succès";
+            } else {
+                $_SESSION['error'] = "Erreur lors de la mise à jour du profil";
+            }
+            
+            redirect('cyclists/profile');
+        } else {
+            redirect('cyclists/profile');
+        }
+    }
+    public function updateProfileImage() {
+        $this->valideRoleUser('cycliste');
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (empty($_FILES['profile_image']['name'])) {
+                $_SESSION['error'] = "Aucun fichier n'a été sélectionné";
+                redirect('cyclists/profile');
+                return;
+            }
+            
+            $fileUpload = new FileUpload();
+            $uploadResult = $fileUpload->uploadImage($_FILES['profile_image'], 'profile_images');
+            
+            if ($uploadResult['success']) {
+                $imgPath = $uploadResult['file_path'];
+                
+                if ($this->cyclistModel->updateProfileImage($_SESSION['user']['id'], $imgPath)) {
+                    $_SESSION['success'] = "Photo de profil mise à jour avec succès";
+                } else {
+                    $_SESSION['error'] = "Erreur lors de la mise à jour de la photo de profil dans la base de données";
+                }
+            } else {
+                $_SESSION['error'] = "Erreur lors de l'upload: " . $uploadResult['error'];
+            }
+            
+            redirect('cyclists/profile');
+        } else {
+            redirect('cyclists/profile');
+        }
+    }
+    public function performances() {
+        // Check if user is logged in and is a cyclist
+        $this->valideRoleUser('cycliste');
+        
+        $cyclistId = $_SESSION['user']['id'];
+        $performances = $this->cyclistModel->getPerformances($cyclistId);
+        
+        $data = [
+            'performances' => $performances
+        ];
+        
+        $this->view('cyclist/performances', $data);
+    }
 }
+
+

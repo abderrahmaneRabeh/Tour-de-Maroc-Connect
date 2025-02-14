@@ -116,7 +116,9 @@
                 });
                 if (res.data.success) {
                     showToast(res.data.success);
-                    window.location.href = URLROOT
+                    setTimeout(() => {
+                        window.location.href = `${URLROOT + "/" + res.data.redirectUrl}`
+                    }, 2000)
                 } else {
                     showToast(res.data.error, 'error');
                     console.log(res)
