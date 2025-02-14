@@ -197,13 +197,12 @@
             <div class="mt-6 space-y-4">
                 <?php foreach ($data['objComments'] as $comment): ?>
                     <div class="px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm">
-                        <p class="text-sm text-gray-500">Posté par <b> <?= $comment->nom ?></b>
+                        <p class="text-sm text-gray-500">Posté par <b><?= $comment->nom ?></b> le
+                            <?= $comment->date_creation ?>
                         </p>
                         <p class="text-lg font-semibold text-gray-800"><?= $comment->contenu ?></p>
-                        <form action="<?= URLROOT ?>/Comment/delete" method="post" class="mt-2">
-                            <input type="hidden" name="comment_id" value="<?= $comment->id ?>">
-                            <button type="submit" class="text-sm text-red-600 hover:underline">Supprimer</button>
-                        </form>
+                        <a href="<?= URLROOT ?>/Comment/delete/<?= $comment->id ?>/<?= $data['ObjEtape']->id ?>"
+                            class="text-sm text-red-600 hover:underline">Supprimer</a>
                     </div>
                 <?php endforeach; ?>
             </div>

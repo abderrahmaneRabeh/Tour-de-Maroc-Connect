@@ -17,7 +17,7 @@ class CommentModel
     public static function GetEtapComments($etap_id)
     {
         $db = Database::getConnection();
-        $query = "SELECT * from commentaires c join fans f on c.fan_id = f.id WHERE etape_id = :etape_id ORDER BY c.id DESC";
+        $query = "SELECT *,c.id as id from commentaires c join fans f on c.fan_id = f.id WHERE etape_id = :etape_id ORDER BY c.date_creation DESC";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':etape_id', $etap_id);
         $stmt->execute();
@@ -48,5 +48,14 @@ class CommentModel
         $query->execute();
         return $query->rowCount();
 
+    }
+
+    public static function SupprimerComment($id)
+    {
+        $db = Database::getConnection();
+        $query = $db->prepare("DELETE FROM commentaires WHERE id = :id");
+        $query->bindValue(':id', $id);
+        $query->execute();
+        return $query->rowCount();
     }
 }

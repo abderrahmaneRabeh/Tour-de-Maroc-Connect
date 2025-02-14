@@ -25,4 +25,14 @@ class Comment extends Controller
         }
     }
 
+    public function delete($id, $etap_id)
+    {
+        $isDeleted = CommentModel::SupprimerComment($id);
+        if ($isDeleted) {
+            header("Location: " . URLROOT . "/Etapes/details/$etap_id");
+        } else {
+            echo "Failed to delete a comment.";
+        }
+    }
+
 }
