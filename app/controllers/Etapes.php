@@ -17,11 +17,16 @@ class Etapes extends Controller
     public function adminEtapes()
     {
         $ObjEtape = EtapeModel::getAllEtapes();
+        $ObjEtapeAdmin = EtapeModel::getAllEtapesadmin();
 
 
         $categoryModel = new CategorysModel();
         $categories = $categoryModel->getAllCategories();
-        $this->view("admin/etapes", data: ['ObjEtape' => $ObjEtape, 'category' => $categories]);
+        $this->view("admin/etapes", data: [
+            'ObjEtape' => $ObjEtape,
+            'category' => $categories,
+            'ObjEtapeAdmin' => $ObjEtapeAdmin
+        ]);
 
     }
 
@@ -47,12 +52,54 @@ class Etapes extends Controller
 
             // Redirect on success or show error on failure
             if ($isAdded) {
+                $_SESSION['success'] = 'Etape added successfully.';
                 header("Location: " . URLROOT . "/Etapes/adminEtapes");
             } else {
                 echo "Failed to add the Etape.";
             }
         }
     }
+
+
+
+    public function updateEtapes()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $etapeId = $_POST['id'];
+            $nom = $_POST['nom'];
+            $lieu_depart = $_POST['lieu_depart'];
+            $lieu_arrivee = $_POST['lieu_arrivee'];
+            $distance_km = $_POST['distance_km'];
+            $date_depart = $_POST['date_depart'];
+            $date_arrive = $_POST['date_arrive'];
+            $categorie_id = $_POST['category_id'];
+            $difficulte = $_POST['difficulte'];
+            $region = $_POST['region'];
+
+            $etapeModel = new EtapeModel();
+
+            $updateSuccessful = $etapeModel->updateEtape(
+                $etapeId,
+                $nom,
+                $lieu_depart,
+                $lieu_arrivee,
+                $distance_km,
+                $date_depart,
+                $date_arrive,
+                $categorie_id,
+                $difficulte,
+                $region
+            );
+
+            if ($updateSuccessful) {
+                header("Location: " . URLROOT . "/Etapes/adminEtapes");
+            } else {
+                echo "No changes were made, or the category/etape wasn't found.";
+            }
+        }
+    }
+
 
 
 
@@ -103,6 +150,7 @@ class Etapes extends Controller
     {
         $isDeleted = EtapeModel::deleteEtape($id);
         if ($isDeleted) {
+            $_SESSION['success'] = 'Etape supprimée avec succès.';
             header("Location: " . URLROOT . "/Etapes/adminEtapes");
         }
     }

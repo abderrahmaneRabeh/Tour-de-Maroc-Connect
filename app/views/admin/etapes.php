@@ -91,8 +91,16 @@
                         <div class="p-4 mx-auto max-w-7xl">
                             <!-- Table Container with horizontal scroll for mobile -->
                             <div class="overflow-x-auto rounded-lg shadow-sm">
+                                <?php if (isset($_SESSION['success'])): ?>
+                                    <p
+                                        class="px-4 py-2 mb-4 text-center text-green-700 bg-green-100 rounded-lg animate-pulse">
+                                        <?php echo $_SESSION['success'];
+                                        unset($_SESSION['success']); ?>
+                                    </p>
+                                <?php endif; ?>
                                 <table class="w-full text-sm bg-white">
                                     <!-- Table Header -->
+
                                     <thead class="bg-gray-50">
                                         <tr>
                                             <th class="px-4 py-3 font-semibold text-left text-gray-900">Name</th>
@@ -111,24 +119,24 @@
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-200">
-                                        <?php foreach ($data['ObjEtape'] as $etape): ?>
+                                        <?php foreach ($data['ObjEtapeAdmin'] as $etape): ?>
                                             <tr class="transition-colors hover:bg-gray-50">
                                                 <td class="px-4 py-3 text-blue-600 hover:text-blue-800">
-                                                    <a href="<?= URLROOT ?>/Etapes/details/<?= $etape->id ?>"
+                                                    <a href="<?= URLROOT ?>/Etapes/details/<?= $etape['id'] ?>"
                                                         class="hover:underline">
-                                                        <?= $etape->nom ?>
+                                                        <?= $etape['nom'] ?>
                                                     </a>
                                                 </td>
-                                                <td class="px-4 py-3 text-gray-600"><?= $etape->lieu_depart ?></td>
-                                                <td class="px-4 py-3 text-gray-600"><?= $etape->lieu_arrivee ?></td>
-                                                <td class="px-4 py-3 text-gray-600"><?= $etape->distance_km ?></td>
-                                                <td class="px-4 py-3 text-center text-gray-600"><?= $etape->date_depart ?>
+                                                <td class="px-4 py-3 text-gray-600"><?= $etape['lieu_depart'] ?></td>
+                                                <td class="px-4 py-3 text-gray-600"><?= $etape['lieu_arrivee'] ?></td>
+                                                <td class="px-4 py-3 text-gray-600"><?= $etape['distance_km'] ?></td>
+                                                <td class="px-4 py-3 text-center text-gray-600"><?= $etape['date_depart'] ?>
                                                 </td>
-                                                <td class="px-4 py-3 text-right text-gray-600"><?= $etape->date_arrive ?>
+                                                <td class="px-4 py-3 text-right text-gray-600"><?= $etape['date_arrive'] ?>
                                                 </td>
-                                                <td class="px-4 py-3 text-right text-gray-600"><?= $etape->difficulte ?>
+                                                <td class="px-4 py-3 text-right text-gray-600"><?= $etape['difficulte'] ?>
                                                 </td>
-                                                <td class="px-4 py-3 text-right text-gray-600"><?= $etape->region ?>
+                                                <td class="px-4 py-3 text-right text-gray-600"><?= $etape['region'] ?>
                                                 </td>
                                                 <td class="px-4 py-3 space-x-2 text-center">
                                                     <button
@@ -141,7 +149,7 @@
                                                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                         </svg>
                                                     </button>
-                                                    <a href="<?= URLROOT ?>/Etapes/delete/<?= $etape->id ?>"
+                                                    <a href="<?= URLROOT ?>/Etapes/delete/<?= $etape['id'] ?>"
                                                         onclick="return confirm('Are you sure you want to delete this etape?')"
                                                         class="text-red-600 hover:text-red-800">
                                                         <svg class="inline w-5 h-5" fill="none" stroke="currentColor"
@@ -233,34 +241,83 @@
                             </div>
                         </div>
 
-                        <!-- Edit Modal -->
                         <div id="editModal"
-                            class="fixed inset-0 hidden w-full h-full overflow-y-auto bg-gray-600 bg-opacity-50">
+                            class="fixed inset-0 z-50 hidden w-full h-full overflow-y-auto bg-gray-600 bg-opacity-50">
                             <div class="relative p-5 mx-auto bg-white border rounded-md shadow-lg top-20 w-96">
                                 <div class="mt-3">
                                     <h3 class="mb-4 text-lg font-medium text-gray-900">Edit Etape</h3>
-                                    <form method="POST" action="<?= URLROOT ?>/Etapes/update" class="space-y-4">
-                                        <input type="hidden" name="id" id="edit_id">
+                                    <form method="POST" action="<?= URLROOT ?>/Etapes/updateEtapes" class="space-y-4">
+                                        <input type="hidden" id="edit_id" name="id" />
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Name</label>
-                                            <input type="text" name="nom" id="edit_nom" required
+                                            <input type="text" id="edit_nom" name="nom" required
                                                 class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
-                                        <!-- [Similar input fields as Add Modal, with id="edit_fieldname"] -->
-                                        <div class="flex justify-end gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">Start
+                                                Location</label>
+                                            <input type="text" id="edit_lieu_depart" name="lieu_depart" required
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">End Location</label>
+                                            <input type="text" id="edit_lieu_arrivee" name="lieu_arrivee" required
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">Distance (km)</label>
+                                            <input type="number" id="edit_distance_km" name="distance_km" required
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">Start Date</label>
+                                            <input type="datetime-local" id="edit_date_depart" name="date_depart"
+                                                required
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">End Date</label>
+                                            <input type="datetime-local" id="edit_date_arrive" name="date_arrive"
+                                                required
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                        </div>
+                                        <select id="edit_category_id" name="category_id" required
+                                            class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                            <option value="" disabled selected>Select a Category</option>
+                                            <?php foreach ($data['category'] as $category): ?>
+                                                <option value="<?= $category['id']; ?>"><?= $category['nom']; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">Difficulty</label>
+                                            <select id="edit_difficulte" name="difficulte" required
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                <option value="facile">Facile</option>
+                                                <option value="Medium">Medium</option>
+                                                <option value="difficile">Difficile</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">Region</label>
+                                            <input type="text" id="edit_region" name="region" required
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                        </div>
+                                        <div class="flex justify-end gap-4 mt-6">
                                             <button type="button" onclick="closeModal('editModal')"
                                                 class="px-4 py-2 text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300">
                                                 Cancel
                                             </button>
                                             <button type="submit"
                                                 class="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">
-                                                Save Changes
+                                                Update Etape
                                             </button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
             </main>
@@ -274,9 +331,17 @@
 
         function openEditModal(etape) {
             const modal = document.getElementById('editModal');
-            document.getElementById('edit_id').value = etape.id;
+
             document.getElementById('edit_nom').value = etape.nom;
-            // Set other field values
+            document.getElementById('edit_lieu_depart').value = etape.lieu_depart;
+            document.getElementById('edit_lieu_arrivee').value = etape.lieu_arrivee;
+            document.getElementById('edit_distance_km').value = etape.distance_km;
+            document.getElementById('edit_date_depart').value = etape.date_depart;
+            document.getElementById('edit_date_arrive').value = etape.date_arrive;
+            document.getElementById('edit_difficulte').value = etape.difficulte;
+            document.getElementById('edit_region').value = etape.region;
+
+
             modal.classList.remove('hidden');
         }
 
@@ -284,7 +349,6 @@
             document.getElementById(modalId).classList.add('hidden');
         }
 
-        // Close modal when clicking outside
         window.onclick = function (event) {
             const addModal = document.getElementById('addModal');
             const editModal = document.getElementById('editModal');
@@ -295,8 +359,6 @@
                 editModal.classList.add('hidden');
             }
         }
-
-        // Toggle mobile menu
         document.querySelector('button').addEventListener('click', () => {
             const sidebar = document.querySelector('.md\\:flex');
             sidebar.classList.toggle('hidden');
