@@ -74,7 +74,7 @@ class EtapeModel
 
         $stmt->execute();
 
-        return $stmt->rowCount() > 0;
+        return $stmt->rowCount();
     }
 
 

@@ -294,7 +294,7 @@
                                                 class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                                 <option value="facile">Facile</option>
                                                 <option value="Medium">Medium</option>
-                                                <option value="difficile">Difficile</option>
+                                                <option value="diffucile">Difficile</option>
                                             </select>
                                         </div>
                                         <div>
@@ -332,6 +332,7 @@
         function openEditModal(etape) {
             const modal = document.getElementById('editModal');
 
+            document.getElementById('edit_id').value = etape.id;
             document.getElementById('edit_nom').value = etape.nom;
             document.getElementById('edit_lieu_depart').value = etape.lieu_depart;
             document.getElementById('edit_lieu_arrivee').value = etape.lieu_arrivee;
