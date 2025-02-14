@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,13 +21,15 @@
 
         <!-- Filtrage des étapes -->
         <section class="mb-8">
-            <form action="" method="GET" class="p-6 transition-all duration-300 bg-white shadow-sm rounded-xl hover:shadow-md" id="filter_form">
+            <form action="" method="GET"
+                class="p-6 transition-all duration-300 bg-white shadow-sm rounded-xl hover:shadow-md" id="filter_form">
                 <div class="grid gap-4 md:grid-cols-3">
                     <div class="space-y-2">
                         <label for="region" class="text-sm font-medium text-gray-700">
                             <i class="mr-2 text-indigo-500 fas fa-map-marker-alt"></i>Région
                         </label>
-                        <select name="region" id="region" class="w-full p-3 transition-all duration-300 border border-gray-200 rounded-lg bg-gray-50 focus:ring-2 focus:ring-indigo-200 focus:outline-none">
+                        <select name="region" id="region"
+                            class="w-full p-3 transition-all duration-300 border border-gray-200 rounded-lg bg-gray-50 focus:ring-2 focus:ring-indigo-200 focus:outline-none">
                             <option value="">Toutes les régions</option>
                             <option value="Atlas">Atlas</option>
                             <option value="Sahara">Sahara</option>
@@ -39,7 +42,8 @@
                         <label for="difficulte" class="text-sm font-medium text-gray-700">
                             <i class="mr-2 text-indigo-500 fas fa-mountain"></i>Difficulté
                         </label>
-                        <select name="difficulte" id="difficulte" class="w-full p-3 transition-all duration-300 border border-gray-200 rounded-lg bg-gray-50 focus:ring-2 focus:ring-indigo-200 focus:outline-none">
+                        <select name="difficulte" id="difficulte"
+                            class="w-full p-3 transition-all duration-300 border border-gray-200 rounded-lg bg-gray-50 focus:ring-2 focus:ring-indigo-200 focus:outline-none">
                             <option value="">Toutes les difficultés</option>
                             <option value="facile">Facile</option>
                             <option value="Medium">Moyen</option>
@@ -48,7 +52,8 @@
                     </div>
 
                     <div class="flex items-end">
-                        <button type="submit" class="w-full px-6 py-3 text-white transition-all duration-300 bg-indigo-500 rounded-lg hover:bg-indigo-600 hover:shadow-lg">
+                        <button type="submit"
+                            class="w-full px-6 py-3 text-white transition-all duration-300 bg-indigo-500 rounded-lg hover:bg-indigo-600 hover:shadow-lg">
                             <i class="mr-2 fas fa-filter"></i>Filtrer
                         </button>
                     </div>
@@ -112,7 +117,7 @@
                                 </td>
                                 <td class="p-4 text-center">
                                     <a href="<?= URLROOT ?>/Etapes/details/<?= $etape->id ?>"
-                                       class="inline-flex items-center px-4 py-2 text-sm text-white transition-all duration-300 bg-indigo-500 rounded-lg hover:bg-indigo-600 hover:shadow-lg">
+                                        class="inline-flex items-center px-4 py-2 text-sm text-white transition-all duration-300 bg-indigo-500 rounded-lg hover:bg-indigo-600 hover:shadow-lg">
                                         <i class="mr-2 fas fa-eye"></i>
                                         Voir détails
                                     </a>
@@ -128,7 +133,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const filterForm = document.getElementById('filter_form');
-            
+
             // Add entrance animation to elements
             const elements = document.querySelectorAll('.rounded-xl');
             elements.forEach((el, index) => {
@@ -141,7 +146,7 @@
                 }, 100 * index);
             });
 
-            filterForm.addEventListener('submit', function(event) {
+            filterForm.addEventListener('submit', function (event) {
                 event.preventDefault();
                 let region = document.getElementById('region').value;
                 let difficulte = document.getElementById('difficulte').value;
@@ -175,7 +180,7 @@
 
                             let row = document.createElement('tr');
                             row.className = 'border-b border-gray-100 transition-all duration-300 hover:bg-indigo-50';
-                            
+
                             row.innerHTML = `
                                 <td class="p-4 font-medium text-gray-800">${etape.nom}</td>
                                 <td class="p-4 text-gray-600">${etape.lieu_depart}</td>
@@ -206,4 +211,5 @@
         });
     </script>
 </body>
+
 </html>
