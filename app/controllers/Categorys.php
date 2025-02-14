@@ -47,4 +47,16 @@ class Categorys extends Controller
             }
         }
     }
+
+    public function deleteCategory($id_category)
+    {
+        $categoryModel = new CategorysModel();
+        $deleteSuccessful = $categoryModel->deleteCategory($id_category);
+
+        if ($deleteSuccessful) {
+            header("Location: " . URLROOT . "/Categorys/index");
+        } else {
+            echo "Error: Category could not be deleted.";
+        }
+    }
 }
