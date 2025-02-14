@@ -87,4 +87,15 @@ class Etapes extends Controller
         }
         echo json_encode($filteredData);
     }
+
+    public function testMail($nomEtape, $idEtape)
+    {
+        $to = 'rabehlife144@gmail.com';
+        $subject = 'Test mail';
+        $message = "Bonjour, vous  tes actuellement en train de regarder l'étape : $nomEtape du Tour de Maroc";
+        $headers = array('Content-Type: text/html; charset=UTF-8');
+        mail($to, $subject, $message, implode("\r\n", $headers));
+
+        header("Location: " . URLROOT . "/Etapes/details/$idEtape");
+    }
 }

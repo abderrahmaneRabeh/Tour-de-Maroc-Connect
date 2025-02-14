@@ -4,7 +4,8 @@ namespace App\Models;
 use App\Lib\Database;
 use App\Classes\Cyclist as CyclistController;
 use Error;
-
+use LDAP\Result;
+use PDO;
 class Cyclist
 {
     private $db;
@@ -17,12 +18,6 @@ class Cyclist
         $stmt = $this->db->prepare("SELECT * FROM cyclistes WHERE id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch();
-    }
-
-    public function getPerformances($id) {
-        $stmt = $this->db->prepare("SELECT * FROM resultats_etapes WHERE cycliste_id = ? ORDER BY date");
-        $stmt->execute([$id]);
-        return $stmt->fetchAll();
     }
 
     public function getPoints($id) {
@@ -41,7 +36,7 @@ class Cyclist
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function searchCyclists($searchTerm) {
@@ -56,10 +51,10 @@ class Cyclist
         
         $stmt = $this->db->prepare($query);
         $term = "%{$searchTerm}%";
-        $stmt->bindParam(':term', $term, \PDO::PARAM_STR);
+        $stmt->bindParam(':term', $term, PDO::PARAM_STR);
         $stmt->execute();
         
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function searchTeams($term) {
@@ -68,9 +63,9 @@ class Cyclist
                                     WHERE nom ILIKE :term
                                     ORDER BY nom
                                     LIMIT 10");
-        $stmt->bindValue(':term', "%{$term}%", \PDO::PARAM_STR);
+        $stmt->bindValue(':term', "%{$term}%", PDO::PARAM_STR);
         $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function searchStages($term) {
@@ -82,9 +77,9 @@ class Cyclist
                                     OR lieu_arrivee ILIKE :term
                                     ORDER BY date_depart
                                     LIMIT 10");
-        $stmt->bindValue(':term', "%{$term}%", \PDO::PARAM_STR);
+        $stmt->bindValue(':term', "%{$term}%", PDO::PARAM_STR);
         $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getTotalPoints($cycliste_id) {
@@ -118,4 +113,72 @@ class Cyclist
         $stmt->execute();
         return $stmt->fetch();
     }
+
+    
+    public function getCyclistById($id) {
+        $stmt = $this->db->prepare('SELECT * FROM cyclistes WHERE id = :id');
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $cyclist = $stmt->fetch(PDO::FETCH_OBJ);
+        return $cyclist;
+    }
+    
+        public function updatePersonalInfo($data) {
+            $stmt = $this->db->prepare('UPDATE cyclistes SET 
+                            nom = :nom, 
+                            email = :email,
+                            nationalite = :nationalite,
+                            bio = :bio,
+                            equipe_id = :equipe_id 
+                            WHERE id = :id');
+            
+            $stmt->bindParam(':nom', $data['nom'], PDO::PARAM_STR);
+            $stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
+            $stmt->bindParam(':nationalite', $data['nationalite'], PDO::PARAM_STR);
+            $stmt->bindParam(':bio', $data['bio'], PDO::PARAM_STR);
+            $stmt->bindParam(':equipe_id', $data['equipe_id'], PDO::PARAM_INT);
+            $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
+            if (!$stmt) {
+                error_log("Erreur SQL: " . $this->db->error());
+            }
+            return $stmt->execute();
+        }
+    
+        public function updateProfileImage($id, $imgPath) {
+            $stmt = $this->db->prepare('UPDATE cyclistes SET img = :img WHERE id = :id');
+            $stmt->bindParam(':img', $imgPath, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $result = $stmt->execute();
+            return $result;
+        }
+        public function getPerformances($cyclisteId) {
+            $stmt = $this->db->prepare('SELECT re.*, e.nom AS etape_nom, e.date_depart 
+                             FROM resultats_etapes re 
+                             JOIN etapes e ON re.etape_id = e.id 
+                             WHERE re.cycliste_id = :cycliste_id 
+                             ORDER BY e.date_depart DESC');
+            $stmt->bindParam(':cycliste_id', $cyclisteId, PDO::PARAM_INT);
+            $stmt->execute();
+            
+            return $stmt->fetchAll(PDO::FETCH_OBJ); 
+        }
+    
+        public function getTeams() {
+            $stmt = $this->db->prepare('SELECT id, nom FROM equipes ORDER BY nom');
+            $stmt->execute();
+            
+            return $stmt->fetchAll(PDO::FETCH_OBJ); 
+        }
+
+        public function getUserRole($userId)
+{
+    $sql = "SELECT role FROM utilisateurs WHERE id = :id"; 
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchColumn(); // Return only the role
 }
+
+    }
+    
+

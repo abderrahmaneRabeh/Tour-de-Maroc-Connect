@@ -107,6 +107,15 @@
                         <i class="mr-2 fas fa-trophy"></i>Voir le Podium
                     </a>
                 </div>
+
+                <div class="p-6 transition-all duration-300 bg-white shadow-sm rounded-xl hover:shadow-md">
+                    <h2 class="mb-4 text-xl font-semibold text-gray-800">Contacter l'organisateur</h2>
+                    <button type="button"
+                        class="w-full px-6 py-3 text-white transition-all duration-300 bg-green-500 rounded-lg hover:bg-green-600"
+                        onclick="location.href='<?= URLROOT ?>/Etapes/testMail/<?= $data['ObjEtape']->nom ?>/<?= $data['ObjEtape']->id ?>'">
+                        <i class="mr-2 fas fa-envelope"></i>email
+                    </button>
+                </div>
             </div>
 
             <!-- Right Column: Comments Section -->
