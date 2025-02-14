@@ -10,39 +10,25 @@
                 </a>
             </button>
             <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                Login to your account
+                Validate your Email
             </h2>
             <p class="mt-2 text-center text-sm text-gray-600">
-                Welcom again to Toure de Maroc
+                Check you email and past the token here
             </p>
         </div>
 
         <!-- Form -->
         <form class="mt-8 space-y-6">
             <div class="rounded-md shadow-sm space-y-4">
-
-                <!-- Email -->
                 <div>
-                    <label for="email-address" class="block text-sm font-medium text-gray-700">
-                        Email address
+                    <label for="token" class="block text-sm font-medium text-gray-700">
+                        Token
                     </label>
-                    <input id="email-address" name="email" type="email" autocomplete="email"
+                    <input id="token_input" name="token" type="text" 
                         class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 
                             placeholder-neutral-200 text-gray-900 rounded-md focus:outline-none 
                             focus:ring-primary focus:border-primary/90 focus:z-10 sm:text-sm"
-                        placeholder="john@example.com">
-                </div>
-
-                <!-- Password -->
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700">
-                        Password
-                    </label>
-                    <input id="password" name="password" type="password" autocomplete="current-password"
-                        class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 
-                            placeholder-neutral-200 text-gray-900 rounded-md focus:outline-none 
-                            focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
-                        placeholder="••••••••">
+                        placeholder="sfsdfa23@#afq232efsdf@34234sgs2342uh243j2">
                 </div>
             </div>
 
@@ -52,22 +38,19 @@
                     class="group relative w-full flex justify-center py-2 px-4 border border-transparent 
                         text-sm font-medium rounded-md text-white bg-primary/80 hover:bg-primary 
                         focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/80">
-                    Login
+                        Sumbit Token
                 </button>
             </div>
         </form>
 
         <!-- Login Link -->
-        <div class="text-center flex items-center justify-between">
+        <div class="text-center">
             <p class="text-sm text-gray-600">
                 I don't have an account?
                 <a href=<?= URLROOT . '/users/register' ?> class="font-medium text-primary hover:text-primary/80">
                     Sign up
                 </a>
             </p>
-            <button id="forget_password" class="text-sm text-gray-600">
-                Forget password
-            </button>
         </div>
     </div>
 </div>
@@ -76,49 +59,25 @@
     const URLROOT = document.getElementById("URLROOT").value;
     document.querySelector("form").addEventListener("submit", async function(event) {
         event.preventDefault(); // Prevent the form from submitting
-
-        // Clear previous error messages
         document.querySelectorAll(".error-message").forEach((el) => el.remove());
+        let isValid = true ;
+        const tokenInput = document.getElementById("token_input");
 
-        let isValid = true;
-
-
-        // Email validation
-        const emailInput = document.getElementById("email-address");
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailInput.value.trim()) {
-            showError(emailInput, "Email address is required.");
+        if(tokenInput.value.length < 10){
             isValid = false;
-        } else if (!emailPattern.test(emailInput.value)) {
-            showError(emailInput, "Please enter a valid email address.");
-            isValid = false;
+            showError(tokenInput,"Token must be a valid token")
         }
-
-        // Password validation
-        const passwordInput = document.getElementById("password");
-        if (!passwordInput.value.trim()) {
-            showError(passwordInput, "Password is required.");
-            isValid = false;
-        } else if (passwordInput.value.length < 6) {
-            showError(passwordInput, "Password must be at least 6 characters.");
-            isValid = false;
-        }
-
-
-
         // If the form is valid, submit the form (replace this with an actual form submission logic)
         if (isValid) {
             try {
-                const pathname = window.location.pathname;
-                const res = await axios.post(`${URLROOT}/users/login`, {
-                    email: emailInput.value,
-                    password: passwordInput.value,
+                const res = await axios.post(`${URLROOT}/users/verifiyToken`, {
+                    token : tokenInput.value
                 });
-                if (res.data.success) {
-                    showToast(res.data.success);
-                    setTimeout(() => {
-                        window.location.href = `${URLROOT + "/" + res.data.redirectUrl}`
-                    }, 2000)
+                if (res.data.redirect) {
+                    showToast("Token is valid");
+                    setTimeout(()=>{
+                        window.location.href = `${URLROOT}/users/${res.data.redirect}`
+                    },2500)
                 } else {
                     showToast(res.data.error, 'error');
                     console.log(res)
@@ -128,11 +87,6 @@
             }
         }
     });
-
-    const forgetPass = document.getElementById("forget_password");
-    forgetPass.addEventListener("click", async () => {
-        window.location.href = `${URLROOT}/users/sendVerificationToken`
-    })
 
     // Function to show error messages
     function showError(input, message) {

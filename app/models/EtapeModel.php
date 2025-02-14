@@ -74,7 +74,7 @@ class EtapeModel
 
         $stmt->execute();
 
-        return $stmt->rowCount() > 0;
+        return $stmt->rowCount();
     }
 
 
@@ -163,6 +163,7 @@ class EtapeModel
         $query = "DELETE FROM etapes WHERE id = :id";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':id', $id);
-        return $stmt->execute();
+        $stmt->execute();
+        return $stmt->rowCount();
     }
 }

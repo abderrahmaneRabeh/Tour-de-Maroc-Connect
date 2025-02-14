@@ -52,6 +52,7 @@ class Etapes extends Controller
 
             // Redirect on success or show error on failure
             if ($isAdded) {
+                $_SESSION['success'] = 'Etape added successfully.';
                 header("Location: " . URLROOT . "/Etapes/adminEtapes");
             } else {
                 echo "Failed to add the Etape.";
@@ -76,6 +77,19 @@ class Etapes extends Controller
             $difficulte = $_POST['difficulte'];
             $region = $_POST['region'];
 
+            echo "Etape ID: " . $etapeId . "<br>";
+            echo "Nom: " . $nom . "<br>";
+            echo "Lieu de Départ: " . $lieu_depart . "<br>";
+            echo "Lieu d'Arrivée: " . $lieu_arrivee . "<br>";
+            echo "Distance (km): " . $distance_km . "<br>";
+            echo "Date de Départ: " . $date_depart . "<br>";
+            echo "Date d'Arrivée: " . $date_arrive . "<br>";
+            echo "Categorie ID: " . $categorie_id . "<br>";
+            echo "Difficulté: " . $difficulte . "<br>";
+            echo "Région: " . $region . "<br>";
+
+            // exit;
+
             $etapeModel = new EtapeModel();
 
             $updateSuccessful = $etapeModel->updateEtape(
@@ -92,6 +106,7 @@ class Etapes extends Controller
             );
 
             if ($updateSuccessful) {
+                $_SESSION['success'] = 'Etape updated successfully.';
                 header("Location: " . URLROOT . "/Etapes/adminEtapes");
             } else {
                 echo "No changes were made, or the category/etape wasn't found.";
@@ -149,6 +164,7 @@ class Etapes extends Controller
     {
         $isDeleted = EtapeModel::deleteEtape($id);
         if ($isDeleted) {
+            $_SESSION['success'] = 'Etape supprimée avec succès.';
             header("Location: " . URLROOT . "/Etapes/adminEtapes");
         }
     }

@@ -5,11 +5,16 @@
             "App\\": "app/"
         }
     },
+
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}
     "authors": [
         {
             "name": "asma828",
             "email": "asmalachhab66@gmail.com"
         }
     ],
-    "require": {}
 }
+
