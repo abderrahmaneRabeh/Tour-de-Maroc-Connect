@@ -16,9 +16,13 @@ class Signalement extends Controller
             echo $idEtape . " " . $fan_id . " " . $description;
 
 
-            // $isAdded = SignalementModel::AjouterSignal($idEtape, $fan_id, $description);
+            $isAdded = SignalementModel::AjouterSignal($idEtape, $fan_id, $description);
+
+            if ($isAdded) {
+                header("Location: " . URLROOT . "/Etapes/details/$idEtape");
+            } else {
+                echo 'Erreur lors de l\'ajout du signalement.';
+            }
         }
-
-
     }
 }

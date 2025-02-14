@@ -24,4 +24,14 @@ class SignalementModel
         $query->execute();
         return $query->rowCount();
     }
+
+    public static function IsFanAlreadySignaled($etape_id, $fan_id)
+    {
+        $db = Database::getConnection();
+        $query = $db->prepare("SELECT count(*) as nbr FROM signalements where fan_id = :fan_id AND etape_id = :etape_id");
+        $query->bindValue(':fan_id', $fan_id);
+        $query->bindValue(':etape_id', $etape_id);
+        $query->execute();
+        return $query->fetch()['nbr'];
+    }
 }

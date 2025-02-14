@@ -18,10 +18,17 @@
         <!-- Header Section -->
         <div class="flex items-center justify-between mb-8">
             <h1 class="text-3xl font-bold text-gray-800"><?= $data['ObjEtape']->nom ?></h1>
-            <button id="showSignalementForm"
-                class="px-6 py-2 text-white transition-all duration-300 bg-red-500 rounded-full hover:bg-red-600 hover:shadow-lg">
-                <i class="mr-2 fas fa-flag"></i>Signaler l'Étape
-            </button>
+            <?php if (!$data['isAlreadySignal']): ?>
+                <button id="showSignalementForm"
+                    class="px-6 py-2 text-white transition-all duration-300 bg-red-500 rounded-full hover:bg-red-600 hover:shadow-lg">
+                    <i class="mr-2 fas fa-flag"></i>Signaler l'Étape
+                </button>
+            <?php else: ?>
+                <button
+                    class="px-6 py-2 text-white transition-all duration-300 bg-green-500 rounded-full hover:bg-green-600 hover:shadow-lg">
+                    <i class="mr-2 fas fa-check-circle"></i>L'Étape a déjà été signalée
+                </button>
+            <?php endif; ?>
         </div>
 
         <!-- Main Content Grid -->
