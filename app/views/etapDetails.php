@@ -155,13 +155,14 @@
                 <div class="mt-6 text-center">
                     <?php if (isset($_SESSION['user']['id'])): ?>
                         <?php if ($data['isAdded']): ?>
-                            <p class="px-6 py-2 text-white transition duration-300 bg-blue-600 rounded-full">
-                                Vous avez aimé cette étape
-                            </p>
+                            <a href="<?= URLROOT ?>/Like/remove/<?= $_SESSION['user']['id'] ?>/<?= $data['ObjEtape']->id ?>"
+                                class="px-6 py-2 text-white transition duration-300 bg-red-600 rounded-full hover:bg-red-700">
+                                <i class="fas fa-heart-broken"></i>
+                            </a>
                         <?php else: ?>
                             <a href="<?= URLROOT ?>/Like/add/<?= $_SESSION['user']['id'] ?>/<?= $data['ObjEtape']->id ?>"
                                 class="px-6 py-2 text-white transition duration-300 bg-green-600 rounded-full hover:bg-green-700">
-                                J'aime
+                                <i class="far fa-heart"></i>
                             </a>
                         <?php endif; ?>
                     <?php endif; ?>

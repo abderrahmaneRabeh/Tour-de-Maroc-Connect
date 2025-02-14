@@ -33,4 +33,14 @@ class LikeModel
         $query->execute();
         return $query->fetch()['nbr'];
     }
+
+    public static function SupprimerLike($fan_id, $etap_id)
+    {
+        $db = Database::getConnection();
+        $query = $db->prepare("DELETE FROM likes WHERE fan_id = :fan_id AND etape_id = :etape_id");
+        $query->bindValue(':fan_id', $fan_id);
+        $query->bindValue(':etape_id', $etap_id);
+        $query->execute();
+        return $query->rowCount();
+    }
 }
