@@ -40,6 +40,43 @@ class EtapeModel
         return $stmt->rowCount() > 0;
     }
 
+    public function updateEtape($id, $nom, $lieu_depart, $lieu_arrivee, $distance_km, $date_depart, $date_arrive, $categorie_id, $difficulte, $region): bool
+    {
+        // Validate required fields
+        if (empty($nom) || empty($lieu_depart) || empty($lieu_arrivee) || empty($distance_km) || empty($date_depart) || empty($date_arrive) || empty($difficulte) || empty($region)) {
+            return false;
+        }
+
+        $query = "UPDATE etapes SET 
+                  nom = :nom,
+                  lieu_depart = :lieu_depart,
+                  lieu_arrivee = :lieu_arrivee,
+                  distance_km = :distance_km,
+                  date_depart = :date_depart,
+                  date_arrive = :date_arrive,
+                  difficulte = :difficulte,
+                  region = :region,
+                  categorie_id = :categorie_id
+                  WHERE id = :id";
+
+        $stmt = $this->db->prepare($query);
+
+        $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
+        $stmt->bindParam(':lieu_depart', $lieu_depart, PDO::PARAM_STR);
+        $stmt->bindParam(':lieu_arrivee', $lieu_arrivee, PDO::PARAM_STR);
+        $stmt->bindParam(':distance_km', $distance_km, PDO::PARAM_INT);
+        $stmt->bindParam(':date_depart', $date_depart, PDO::PARAM_STR);
+        $stmt->bindParam(':date_arrive', $date_arrive, PDO::PARAM_STR);
+        $stmt->bindParam(':difficulte', $difficulte, PDO::PARAM_STR);
+        $stmt->bindParam(':region', $region, PDO::PARAM_STR);
+        $stmt->bindParam(':categorie_id', $categorie_id, PDO::PARAM_INT); // Bind categorie_id
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT); // Bind the id for the WHERE clause
+
+        $stmt->execute();
+
+        return $stmt->rowCount() > 0;
+    }
+
 
     public static function getAllEtapes()
     {
@@ -67,6 +104,14 @@ class EtapeModel
         }
 
         return $EtapObjects;
+    }
+    public static function getAllEtapesadmin()
+    {
+        $db = Database::getConnection();
+        $query = "SELECT * FROM etapes";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 
     public static function getEtapeById($id)
