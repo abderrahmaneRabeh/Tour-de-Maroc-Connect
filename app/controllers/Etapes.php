@@ -17,13 +17,43 @@ class Etapes extends Controller
     public function adminEtapes()
     {
         $ObjEtape = EtapeModel::getAllEtapes();
-     
+
 
         $categoryModel = new CategorysModel();
         $categories = $categoryModel->getAllCategories();
-        $this->view("admin/etapes", data: ['ObjEtape' => $ObjEtape,'category'=>$categories]);
+        $this->view("admin/etapes", data: ['ObjEtape' => $ObjEtape, 'category' => $categories]);
 
     }
+
+    public function addEtapes()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        
+            $etapeModel = new EtapeModel();
+
+
+
+            $nom = $_POST['nom'];
+            $lieu_depart = $_POST['lieu_depart'];
+            $lieu_arrivee = $_POST['lieu_arrivee'];
+            $distance_km = $_POST['distance_km'];
+            $date_depart = $_POST['date_depart'];
+            $date_arrive = $_POST['date_arrive'];
+            $categorie_id = $_POST['category_id'];
+            $difficulte = $_POST['difficulte'];
+            $region = $_POST['region'];
+
+            $isAdded = $etapeModel->addEtape($nom, $lieu_depart, $lieu_arrivee, $distance_km, $date_depart, $date_arrive, $categorie_id, $difficulte, $region);
+
+            // Redirect on success or show error on failure
+            if ($isAdded) {
+                header("Location: " . URLROOT . "/Etapes/adminEtapes");
+            } else {
+                echo "Failed to add the Etape.";
+            }
+        }
+    }
+
 
 
 
