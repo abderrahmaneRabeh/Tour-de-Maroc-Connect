@@ -1,5 +1,6 @@
 <?php
 use App\Lib\Controller;
+use App\Models\CategorysModel;
 use App\models\EtapeModel;
 use App\models\LikeModel;
 use App\models\ResultatEtapesModel;
@@ -12,6 +13,18 @@ class Etapes extends Controller
         $ObjEtape = EtapeModel::getAllEtapes();
         $this->view("etapes", $ObjEtape);
     }
+    public function adminEtapes()
+    {
+        $ObjEtape = EtapeModel::getAllEtapes();
+     
+
+        $categoryModel = new CategorysModel();
+        $categories = $categoryModel->getAllCategories();
+        $this->view("admin/etapes", data: ['ObjEtape' => $ObjEtape,'category'=>$categories]);
+
+    }
+
+
 
     public function details($id)
     {
