@@ -4,6 +4,7 @@ use App\models\EtapeModel;
 use App\models\LikeModel;
 use App\models\ResultatEtapesModel;
 use App\models\CommentModel;
+use App\models\SignalementModel;
 
 class Etapes extends Controller
 {
@@ -18,10 +19,13 @@ class Etapes extends Controller
         $isAdded = LikeModel::EtapUserLiked($_SESSION['user']['id'], $id);
         $ObjEtape = EtapeModel::getEtapeById($id);
         $objComments = CommentModel::GetEtapComments($id);
+        $isAlreadySignal = SignalementModel::IsFanAlreadySignaled($id, $_SESSION['user']['id']);
+
         $this->view("etapDetails", [
             'ObjEtape' => $ObjEtape,
             'isAdded' => $isAdded,
-            'objComments' => $objComments
+            'objComments' => $objComments,
+            'isAlreadySignal' => $isAlreadySignal
         ]);
     }
 
