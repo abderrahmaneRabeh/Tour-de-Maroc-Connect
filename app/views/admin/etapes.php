@@ -48,6 +48,15 @@
                             </svg>
                             Etapes
                         </a>
+                        <a href="<?php echo URLROOT . '/Admin/Commentaires' ?>"
+                            class="flex items-center px-4 py-2 text-gray-300 rounded-lg hover:bg-gray-700">
+                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 8h10M7 12h4m1 5H7M5 8a2 2 0 01-2 2v12a2 2 0 002 2h10a2 2 0 002-2V10a2 2 0 00-2-2h-3.5a1 1 0 01-.8-.4l-1.5-1.5A1 1 0 005 8h6z">
+                                </path>
+                            </svg>
+                            Commentaire
+                        </a>
                     </nav>
                 </div>
             </div>
@@ -70,11 +79,11 @@
             <!-- Main Content Area -->
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
                 <div class="container px-6 py-8 mx-auto">
-                    <div class="bg-white rounded-lg shadow-lg p-6">
-                        <div class="flex justify-between items-center mb-6">
+                    <div class="p-6 bg-white rounded-lg shadow-lg">
+                        <div class="flex items-center justify-between mb-6">
                             <h1 class="text-2xl font-semibold text-gray-800">Etapes</h1>
                             <button onclick="openAddModal()"
-                                class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                class="px-6 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                 Add Etape +
                             </button>
                         </div>
@@ -121,11 +130,11 @@
                                                 </td>
                                                 <td class="px-4 py-3 text-right text-gray-600"><?= $etape['region'] ?>
                                                 </td>
-                                                <td class="px-4 py-3 text-center space-x-2">
+                                                <td class="px-4 py-3 space-x-2 text-center">
                                                     <button
                                                         onclick="openEditModal(<?= htmlspecialchars(json_encode($etape)) ?>)"
                                                         class="text-blue-600 hover:text-blue-800">
-                                                        <svg class="w-5 h-5 inline" fill="none" stroke="currentColor"
+                                                        <svg class="inline w-5 h-5" fill="none" stroke="currentColor"
                                                             viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                                 stroke-width="2"
@@ -135,7 +144,7 @@
                                                     <a href="<?= URLROOT ?>/Etapes/delete/<?= $etape['id'] ?>"
                                                         onclick="return confirm('Are you sure you want to delete this etape?')"
                                                         class="text-red-600 hover:text-red-800">
-                                                        <svg class="w-5 h-5 inline" fill="none" stroke="currentColor"
+                                                        <svg class="inline w-5 h-5" fill="none" stroke="currentColor"
                                                             viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                                 stroke-width="2"
@@ -152,44 +161,44 @@
 
                         <!-- Add Etape Modal -->
                         <div id="addModal"
-                            class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-                            <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                            class="fixed inset-0 z-50 hidden w-full h-full overflow-y-auto bg-gray-600 bg-opacity-50">
+                            <div class="relative p-5 mx-auto bg-white border rounded-md shadow-lg top-20 w-96">
                                 <div class="mt-3">
-                                    <h3 class="text-lg font-medium text-gray-900 mb-4">Add New Etape</h3>
+                                    <h3 class="mb-4 text-lg font-medium text-gray-900">Add New Etape</h3>
                                     <form method="POST" action="<?= URLROOT ?>/Etapes/addEtapes" class="space-y-4">
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Name</label>
                                             <input type="text" name="nom" required
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Start
                                                 Location</label>
                                             <input type="text" name="lieu_depart" required
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">End Location</label>
                                             <input type="text" name="lieu_arrivee" required
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Distance (km)</label>
                                             <input type="number" name="distance_km" required
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Start Date</label>
                                             <input type="datetime-local" name="date_depart" required
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">End Date</label>
                                             <input type="datetime-local" name="date_arrive" required
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
                                         <select name="category_id" required
-                                            class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                            class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                             <option value="" disabled selected>Select a Category</option>
                                             <?php foreach ($data['category'] as $category): ?>
                                                 <option value="<?= $category['id']; ?>"><?= $category['nom']; ?></option>
@@ -198,7 +207,7 @@
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Difficulty</label>
                                             <select name="difficulte" required
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                                 <option value="facile">facile</option>
                                                 <option value="Medium">Medium</option>
                                                 <option value="diffucile">diffucile</option>
@@ -207,15 +216,15 @@
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Region</label>
                                             <input type="text" name="region" required
-                                                class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         </div>
                                         <div class="flex justify-end gap-4 mt-6">
                                             <button type="button" onclick="closeModal('addModal')"
-                                                class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300">
+                                                class="px-4 py-2 text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300">
                                                 Cancel
                                             </button>
                                             <button type="submit"
-                                                class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                                                class="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">
                                                 Add Etape
                                             </button>
                                         </div>
@@ -287,7 +296,7 @@
                                         </div>
                                         <div class="flex justify-end gap-4 mt-6">
                                             <button type="button" onclick="closeModal('editModal')"
-                                                class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300">
+                                                class="px-4 py-2 text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300">
                                                 Cancel
                                             </button>
                                             <button type="submit"

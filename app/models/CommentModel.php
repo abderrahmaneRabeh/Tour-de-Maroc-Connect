@@ -30,7 +30,8 @@ class CommentModel
                 $comment['contenu'],
                 $comment['fan_id'],
                 $comment['etape_id'],
-                $comment['date_creation']
+                $comment['date_creation'],
+                $comment['is_valid']
             );
             $commentObject->nom = $comment['nom'];
             $commentsObjects[] = $commentObject;
@@ -54,6 +55,39 @@ class CommentModel
     {
         $db = Database::getConnection();
         $query = $db->prepare("DELETE FROM commentaires WHERE id = :id");
+        $query->bindValue(':id', $id);
+        $query->execute();
+        return $query->rowCount();
+    }
+
+    public static function getInvalidComments()
+    {
+        $db = Database::getConnection();
+        $query = $db->prepare("SELECT *,c.id as id,e.nom as nome,f.nom as nom FROM commentaires c join fans f on c.fan_id = f.id join etapes e on e.id = c.etape_id  WHERE is_valid = false");
+        $query->execute();
+        $comments = $query->fetchAll();
+
+        $commentsObjects = [];
+        foreach ($comments as $comment) {
+            $commentObject = new Comment(
+                $comment['id'],
+                $comment['contenu'],
+                $comment['fan_id'],
+                $comment['etape_id'],
+                $comment['date_creation'],
+                $comment['is_valid']
+            );
+            $commentObject->nom = $comment['nom'];
+            $commentObject->etapeNom = $comment['nome'];
+            $commentsObjects[] = $commentObject;
+        }
+        return $commentsObjects;
+    }
+
+    public static function validerCommentaire($id)
+    {
+        $db = Database::getConnection();
+        $query = $db->prepare("UPDATE commentaires SET is_valid = true WHERE id = :id");
         $query->bindValue(':id', $id);
         $query->execute();
         return $query->rowCount();
