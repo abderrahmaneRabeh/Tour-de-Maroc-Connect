@@ -31,7 +31,7 @@
                             Dashboard
                         </a>
                         <a href="<?php echo URLROOT . '/Categorys/index' ?>"
-                            class="flex items-center px-4 py-2 text-white bg-gray-700 rounded-lg">
+                            class="flex items-center px-4 py-2 text-white rounded-lg">
                             <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
@@ -49,7 +49,7 @@
                             Etapes
                         </a>
                         <a href="<?php echo URLROOT . '/Admin/Commentaires' ?>"
-                            class="flex items-center px-4 py-2 text-gray-300 rounded-lg hover:bg-gray-700">
+                            class="flex items-center px-4 py-2 text-gray-300 bg-gray-700 rounded-lg hover:bg-gray-700">
                             <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M7 8h10M7 12h4m1 5H7M5 8a2 2 0 01-2 2v12a2 2 0 002 2h10a2 2 0 002-2V10a2 2 0 00-2-2h-3.5a1 1 0 01-.8-.4l-1.5-1.5A1 1 0 005 8h6z">
@@ -87,19 +87,51 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
+                                        <!-- <th
+                                            class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">
+                                            ID
+                                        </th> -->
                                         <th
-                                            class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                            ID</th>
+                                            class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">
+                                            Contenu
+                                        </th>
                                         <th
-                                            class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                            Name</th>
+                                            class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">
+                                            Fan
+                                        </th>
                                         <th
-                                            class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                            Actions</th>
+                                            class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">
+                                            etap
+                                        </th>
+                                        <th
+                                            class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">
+                                            operation
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-
+                                    <?php foreach ($data as $comment) { ?>
+                                        <tr>
+                                            <!-- <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                <?php echo $comment->id; ?>
+                                            </td> -->
+                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                <?php echo $comment->contenu; ?>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                <?php echo $comment->nom; ?>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                <?php echo $comment->etapeNom; ?>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                <a href="<?php echo URLROOT . '/Admin/validerCommentaire/' . $comment->id; ?>"
+                                                    class="text-blue-500 hover:text-blue-700">
+                                                    Valider
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
                                 </tbody>
                             </table>
                         </div>

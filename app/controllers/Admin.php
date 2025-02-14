@@ -1,6 +1,6 @@
 <?php
 use App\Lib\Controller;
-
+use App\Models\CommentModel;
 
 class Admin extends Controller
 {
@@ -11,6 +11,13 @@ class Admin extends Controller
 
     public function Commentaires()
     {
-        $this->view("admin/Commentaire");
+        $commentObj = CommentModel::getInvalidComments();
+        $this->view("admin/Commentaire", $commentObj);
+    }
+
+    public function validerCommentaire($id)
+    {
+        CommentModel::validerCommentaire($id);
+        header("Location: " . URLROOT . "/Admin/Commentaires");
     }
 }

@@ -28,7 +28,7 @@ class Etapes extends Controller
     public function addEtapes()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        
+
             $etapeModel = new EtapeModel();
 
 
@@ -97,5 +97,13 @@ class Etapes extends Controller
         mail($to, $subject, $message, implode("\r\n", $headers));
 
         header("Location: " . URLROOT . "/Etapes/details/$idEtape");
+    }
+
+    public function delete($id)
+    {
+        $isDeleted = EtapeModel::deleteEtape($id);
+        if ($isDeleted) {
+            header("Location: " . URLROOT . "/Etapes/adminEtapes");
+        }
     }
 }
