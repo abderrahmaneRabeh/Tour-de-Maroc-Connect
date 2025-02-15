@@ -27,6 +27,50 @@ class Cyclist
         return $result ? $result['points'] : 0;
     }
 
+    public function getCurrentRanking($cyclisteId) {
+        $query = "SELECT position 
+            FROM (
+                SELECT id, points, 
+                       RANK() OVER (ORDER BY points DESC) as position 
+                FROM cyclistes
+            ) ranked 
+            WHERE id = :id
+        ";
+    
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $cyclisteId, PDO::PARAM_INT);
+        $stmt->execute(); 
+    
+        $result = $stmt->fetchObject(); 
+    
+        return $result ? $result->position : 0; 
+    }
+    
+
+    public function getAverageSpeed($cyclisteId) {
+        $query = "SELECT AVG(vitesse_moy) as avg_speed
+            FROM resultats_etapes
+            WHERE cycliste_id = :id
+        ";
+    
+        $stmt = $this->db->prepare($query); 
+        $stmt->bindParam(':id', $cyclisteId, PDO::PARAM_INT); 
+        $stmt->execute(); 
+    
+        $result = $stmt->fetchObject(); 
+    
+        return $result && $result->avg_speed ? round($result->avg_speed, 1) : 0; 
+    }
+    
+    
+    public function getStats($cyclisteId) {
+        return [
+            'points' => $this->getTotalPoints($cyclisteId),
+            'ranking' => $this->getCurrentRanking($cyclisteId),
+            'averageSpeed' => $this->getAverageSpeed($cyclisteId)
+        ];
+    }
+
     public function getAllCyclists() {
         $query = "SELECT c.id, c.nom as name, e.nom as team, c.nationalite as country, c.img as image 
                   FROM cyclistes c 
@@ -170,6 +214,15 @@ class Cyclist
             return $stmt->fetchAll(PDO::FETCH_OBJ); 
         }
 
+        public function getTeamById($id) {
+            $stmt = $this->db->prepare('SELECT * FROM equipes WHERE id = :id');
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_OBJ);
+        }
+        
+
+
         public function getUserRole($userId)
 {
     $sql = "SELECT role FROM utilisateurs WHERE id = :id"; 
@@ -177,6 +230,92 @@ class Cyclist
     $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchColumn(); // Return only the role
+}
+
+public function getCyclistComparison($cyclistId) {
+    $query = "SELECT c.id, c.nom, e.nom as equipe,
+            AVG(r.vitesse_moy) as vitesse_moy,c.points,
+            RANK() OVER (ORDER BY c.points DESC) as position
+        FROM 
+            cyclistes c
+        LEFT JOIN 
+            equipes e ON c.equipe_id = e.id
+        LEFT JOIN 
+            resultats_etapes r ON c.id = r.cycliste_id
+        GROUP BY 
+            c.id, c.nom, e.nom, c.points
+        ORDER BY 
+            position ASC
+        LIMIT 10"; 
+    
+    $stmt = $this->db->prepare($query);
+    $stmt->execute();
+    
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+
+
+
+public function getStageResults($cyclistId) {
+    $query = "SELECT e.nom AS nom, 
+               e.date_depart AS date_depart, 
+               r.distance_km, 
+               r.vitesse_moy, 
+               r.classement , 
+               r.points
+        FROM resultats_etapes r
+        JOIN etapes e ON r.etape_id = e.id
+        WHERE r.cycliste_id = :cyclistId  
+        ORDER BY e.date_depart ASC
+    ";
+
+    $stmt = $this->db->prepare($query);
+    $stmt->bindParam(':cyclistId', $cyclistId, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+public function getCyclistOverview($cyclistId) {
+    $query = "SELECT 
+                AVG(r.vitesse_moy) as vitesse_moy,
+                SUM(r.points) as points_total,
+                (SELECT COUNT(*) + 1 FROM 
+                    (SELECT SUM(points) as total_points 
+                     FROM resultats_etapes 
+                     GROUP BY cycliste_id 
+                     HAVING SUM(points) > 
+                        (SELECT SUM(points) 
+                         FROM resultats_etapes 
+                         WHERE cycliste_id = :cyclistId)
+                    ) as better_cyclists
+                ) as position_generale,
+                SUM(r.distance_km) as distance_totale,
+                (SELECT SUM(distance_km) FROM etapes) as distance_totale_course
+            FROM resultats_etapes r
+            WHERE r.cycliste_id = :cyclistId";
+    
+    $stmt = $this->db->prepare($query);
+    $stmt->bindParam(':cyclistId', $cyclistId, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    return $stmt->fetch(PDO::FETCH_OBJ);
+}
+
+public function getCyclistSpeed($cyclistId) {
+    $query = "
+        SELECT AVG(vitesse_moy) as avg_speed
+        FROM resultats_etapes
+        WHERE cycliste_id = :cyclistId
+    ";
+    
+    $stmt = $this->db->prepare($query);
+    $stmt->bindParam(':cyclistId', $cyclistId, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    $result = $stmt->fetch(PDO::FETCH_OBJ);
+    return $result ? $result->avg_speed : 0;
 }
 
     }
