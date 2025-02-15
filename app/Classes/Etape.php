@@ -13,8 +13,9 @@ class Etape
     private $date_arrive;
     private $categorie_id;
     private $difficulte;
+    private $region;
 
-    public function __construct($nom, $lieu_depart, $lieu_arrivee, $distance_km, $date_depart, $date_arrive, $categorie_id, $difficulte, $id = null)
+    public function __construct($nom, $lieu_depart, $lieu_arrivee, $distance_km, $date_depart, $date_arrive, $categorie_id, $difficulte, $region = '', $id = null)
     {
         $this->id = $id;
         $this->nom = $nom;
@@ -25,6 +26,7 @@ class Etape
         $this->date_arrive = $date_arrive;
         $this->categorie_id = $categorie_id;
         $this->difficulte = $difficulte;
+        $this->region = $region;
     }
 
     public function __get($property)

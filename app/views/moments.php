@@ -10,6 +10,9 @@
 </head>
 
 <body class="bg-gray-50">
+    <?php
+    require "../app/inc/navbar.php";
+    ?>
     <!-- Hero Section -->
     <header class="relative h-64">
         <div class="absolute inset-0">
