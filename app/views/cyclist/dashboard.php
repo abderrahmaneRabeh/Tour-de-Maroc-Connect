@@ -38,7 +38,7 @@
                 <span class="text-gray-700">Dashboard</span>
                 <div class="flex items-center space-x-4">
                     <i class="fas fa-cog text-gray-600 cursor-pointer"></i>
-                    <i class="fas fa-sign-out-alt text-gray-600 cursor-pointer"></i>
+                    <a href="<?= URLROOT . '/users/signout' ?>" class="fas fa-sign-out-alt text-gray-600 cursor-pointer"></a>
                     <div class="relative">
                         <button class="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none">
                             <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
@@ -59,17 +59,17 @@
                         <!-- Card Points -->
                         <div class="bg-white p-6 rounded-lg shadow-sm">
                             <h3 class="text-lg font-semibold text-gray-700">Points Totaux</h3>
-                            <p class="text-3xl font-bold mt-2"><?= htmlspecialchars($data['stats']['points']) ?></p>
+                            <p class="text-3xl font-bold mt-2"><?= $data['points'] ?></p>
                         </div>
                         <!-- Card Ranking -->
                         <div class="bg-white p-6 rounded-lg shadow-sm">
                             <h3 class="text-lg font-semibold text-gray-700">Classement Actuel</h3>
-                            <p class="text-3xl font-bold mt-2">#<?= htmlspecialchars($data['stats']['ranking']) ?></p>
+                            <p class="text-3xl font-bold mt-2">#<?= $data['ranking'] ?></p>
                         </div>
                         <!-- Card Speed -->
                         <div class="bg-white p-6 rounded-lg shadow-sm">
                             <h3 class="text-lg font-semibold text-gray-700">Vitesse Moyenne</h3>
-                            <p class="text-3xl font-bold mt-2"><?= htmlspecialchars($data['stats']['averageSpeed']) ?> km/h</p>
+                            <p class="text-3xl font-bold mt-2"><?= $data['averageSpeed'] ?>km/h</p>
                         </div>
                     </div>
 
