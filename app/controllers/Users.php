@@ -64,7 +64,7 @@ class Users extends Controller
     public function signout()
     {
         session_destroy();
-        redirect("");
+        redirect("index");
     }
     public function forbidden()
     {
