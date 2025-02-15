@@ -105,7 +105,7 @@
                                     </p>
                                 <?php endif; ?>
 
-                                <a href="<?= URLROOT ?>/cyclists/profile/<?= $cyclist['id'] ?>"
+                                <a href="<?= URLROOT ?>/cyclists/info/<?= $cyclist['id'] ?>"
                                     class="px-6 py-2 font-semibold text-white transition-all duration-300 transform translate-y-4 bg-red-600 rounded opacity-0 group-hover:translate-y-0 group-hover:opacity-100 hover:bg-black">
                                     View Profile
                                 </a>
