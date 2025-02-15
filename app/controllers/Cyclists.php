@@ -15,20 +15,99 @@ class Cyclists extends Controller
         $this->historiqueModel = $this->modal('Historique');
     }
 
-    public function dashboard()
-    {
-        $this->view("cyclist/dashboard");
+    public function dashboard() {
+        $this->valideRoleUser('cycliste');
+    
+        $cyclistId = $_SESSION['user']['id'];
+        
+        $cyclist = $this->cyclistModel->getCyclistById($cyclistId);
+        $performances = $this->cyclistModel->getPerformances($cyclistId);
+        $teams = $this->cyclistModel->getTeams();
+    
+        $points = $this->cyclistModel->getPoints($cyclistId);
+    
+        $ranking = $this->cyclistModel->getCurrentRanking($cyclistId);
+    
+        $averageSpeed = $this->cyclistModel->getAverageSpeed($cyclistId);
+    
+        $data = [
+            'cyclist' => $cyclist,
+            'performances' => $performances,
+            'teams' => $teams,
+            'points' => $points,  
+            'ranking' => $ranking,
+            'averageSpeed' => $averageSpeed
+        ];
+    
+        $this->view('cyclist/dashboard', $data);
     }
+    
+    
+    public function info($id) {
+        // Fetch cyclist data
+        $cyclist = $this->cyclistModel->getCyclistById($id);
+        
+        if (!$cyclist) {
+            $_SESSION['error'] = "Cyclist not found";
+            redirect('');
+            exit();
+        }
+        
+        $team = null;
+        if ($cyclist->equipe_id) {
+            $team = $this->cyclistModel->getTeamById($cyclist->equipe_id);
+        }
+        
+        // Get cyclist's performances/results
+        $performances = $this->cyclistModel->getPerformances($id);
+        
+        // Get stats
+        $stats = [
+            'points' => $this->cyclistModel->getPoints($id),
+            'ranking' => $this->cyclistModel->getCurrentRanking($id),
+            'averageSpeed' => $this->cyclistModel->getAverageSpeed($id)
+        ];
+        
+        $data = [
+            'cyclist' => $cyclist,
+            'team' => $team,
+            'performances' => $performances,
+            'stats' => $stats
+        ];
+        
+        $this->view('cyclist/info', $data);
+    }
+    
+
 
     public function profiles()
     {
         $this->view("cyclist/profile");
     }
 
-    public function stats()
-    {
-        $this->view("cyclist/stats");
+    public function stats() {
+        $this->valideRoleUser('cycliste');
+        $cyclistId = $_SESSION['user']['id'];
+        $comparisonData = $this->cyclistModel->getCyclistComparison($cyclistId);
+        $detailEtaps = $this->cyclistModel->getStageResults($cyclistId);
+        $overview = $this->cyclistModel->getCyclistOverview($cyclistId);
+        // var_dump($detailEtaps);
+        // die();
+        
+        $data = [
+            'comparisonData' => $comparisonData,
+            'detailEtaps' => $detailEtaps,
+            'overview' => $overview
+        ];
+
+        // $view= "cyclist/stats";
+        // require_once "../app/inc/header.php";
+        //     require_once "../app/views/" . $view . ".php";
+        //     require_once "../app/inc/footer.php";
+        $this->view('cyclist/stats', $data);
     }
+    
+    
 
     public function register()
     {
