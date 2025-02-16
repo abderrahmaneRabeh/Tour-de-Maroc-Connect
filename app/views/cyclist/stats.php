@@ -60,7 +60,7 @@
 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
     <div class="bg-white rounded-lg shadow-sm p-6">
         <h3 class="text-sm font-medium text-gray-600">Vitesse Moyenne</h3>
-        <p class="text-2xl font-bold mt-2"><?= number_format($data['overview']->vitesse_moy, 1) ?> km/h</p>
+        <p class="text-2xl font-bold mt-2"><?= number_format($data['overview']->vitesse_moy ?? 0, 1) ?> km/h</p>
         <span class="text-green-500 text-sm"><i class="fas fa-arrow-up"></i> +2.3%</span>
     </div>
     <div class="bg-white rounded-lg shadow-sm p-6">

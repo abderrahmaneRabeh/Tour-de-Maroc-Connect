@@ -79,8 +79,7 @@ class User
 
     public function getUserRole($userId)
 {
-    $sql = "
-        SELECT id, role as role_name, 1 as isactive 
+    $sql = "SELECT id, role as role_name, 1 as isactive 
         FROM (
             SELECT id, role FROM utilisateurs 
             WHERE id = :id
@@ -93,7 +92,7 @@ class User
     $stmt = $this->db->prepare($sql);
     $stmt->bindParam(':id', $userId, \PDO::PARAM_INT);
     $stmt->execute();
-    return $stmt->fetch(\PDO::FETCH_ASSOC);
+    return $stmt->fetch(\PDO::FETCH_OBJ);
 }
 
 }
