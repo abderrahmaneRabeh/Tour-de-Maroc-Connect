@@ -49,13 +49,22 @@
                             Etapes
                         </a>
                         <a href="<?php echo URLROOT . '/Admin/Commentaires' ?>"
-                            class="flex items-center px-4 py-2 text-gray-300 rounded-lg hover:bg-gray-700">
+                            class="flex items-center px-4 py-2 text-white rounded-lg">
                             <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M7 8h10M7 12h4m1 5H7M5 8a2 2 0 01-2 2v12a2 2 0 002 2h10a2 2 0 002-2V10a2 2 0 00-2-2h-3.5a1 1 0 01-.8-.4l-1.5-1.5A1 1 0 005 8h6z">
                                 </path>
                             </svg>
                             Commentaire
+                        </a>
+                        <a href="<?php echo URLROOT . '/Admin/ValiderCyclistes' ?>"
+                            class="flex items-center px-4 py-2 text-white rounded-lg">
+                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                            Valider Cyclistes
                         </a>
                     </nav>
                 </div>
