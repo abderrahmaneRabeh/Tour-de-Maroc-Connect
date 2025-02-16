@@ -304,8 +304,7 @@ public function getCyclistOverview($cyclistId) {
 }
 
 public function getCyclistSpeed($cyclistId) {
-    $query = "
-        SELECT AVG(vitesse_moy) as avg_speed
+    $query = "SELECT AVG(vitesse_moy) as avg_speed
         FROM resultats_etapes
         WHERE cycliste_id = :cyclistId
     ";
@@ -317,6 +316,51 @@ public function getCyclistSpeed($cyclistId) {
     $result = $stmt->fetch(PDO::FETCH_OBJ);
     return $result ? $result->avg_speed : 0;
 }
+
+public function getCyclistesEnAttenteValidation() {
+    $query = "SELECT c.*, e.nom as nom_equipe 
+        FROM cyclistes c
+        LEFT JOIN equipes e ON c.equipe_id = e.id
+        WHERE c.validation_status = 'en_attente'
+        ORDER BY c.date_inscription ASC";
+
+    $stmt = $this->db->prepare($query); 
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ); 
+}
+
+public function getCyclisteById($id) {
+    $stmt = $this->db->prepare("SELECT c.*, e.nom as nom_equipe, e.pays as pays_equipe
+        FROM cyclistes c
+        LEFT JOIN equipes e ON c.equipe_id = e.id
+        WHERE c.id = :id
+    ");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_OBJ); 
+}
+
+public function validerCycliste($id) {
+    $stmt = $this->db->prepare("UPDATE cyclistes 
+        SET validation_status = 'valide', 
+            date_validation = CURRENT_TIMESTAMP
+        WHERE id = :id
+    ");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    return $stmt->execute(); 
+}
+
+public function refuserCycliste($id) {
+    $stmt = $this->db->prepare("UPDATE cyclistes 
+        SET validation_status = 'refuse', 
+            date_validation = CURRENT_TIMESTAMP
+        WHERE id = :id
+    ");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    return $stmt->execute(); 
+}
+
+
 
     }
     
